@@ -22,7 +22,7 @@ export function ArrowLink({
         <span className="text-lg group-hover:text-accent transition-colors">
           {children}
         </span>
-        <span className="w-10 h-10 rounded-xl bg-accent flex items-center justify-center text-background group-hover:scale-105 transition-transform">
+        <span className="w-10 h-10 rounded-xl bg-accent flex items-center justify-center text-accent-foreground group-hover:scale-105 transition-transform">
           <ArrowIcon />
         </span>
       </Link>
@@ -35,7 +35,7 @@ export function ArrowLink({
       className={`${base} text-lg hover:text-accent ${className}`}
     >
       <span>{children}</span>
-      <span className="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center group-hover:border-accent transition-colors">
+      <span className="w-8 h-8 rounded-full border border-overlay flex items-center justify-center group-hover:border-accent transition-colors">
         <ArrowIcon />
       </span>
     </Link>

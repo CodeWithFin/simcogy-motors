@@ -49,11 +49,11 @@ export function EnquiryForm({ carId, carTitle }: Props) {
 
   if (status === "ok") {
     return (
-      <div className="bg-card border border-border rounded-4xl p-6 md:p-8">
-        <h3 className="text-xl font-medium tracking-tight mb-2">
+      <div className="bg-card text-card-foreground border border-border rounded-4xl p-6 md:p-8 shadow-sm dark:shadow-none">
+        <h3 className="text-xl font-medium tracking-tight mb-2 text-success">
           Enquiry sent
         </h3>
-        <p className="text-muted text-sm font-light">
+        <p className="text-muted-foreground text-sm font-light">
           We&apos;ll get back to you shortly on {phone}.
         </p>
       </div>
@@ -63,7 +63,7 @@ export function EnquiryForm({ carId, carTitle }: Props) {
   return (
     <form
       onSubmit={onSubmit}
-      className="bg-card border border-border rounded-4xl p-6 md:p-8 space-y-4"
+      className="bg-card text-card-foreground border border-border rounded-4xl p-6 md:p-8 space-y-4 shadow-sm dark:shadow-none"
     >
       <h3 className="text-xl font-medium tracking-tight mb-2">Send enquiry</h3>
       <input
@@ -94,30 +94,14 @@ export function EnquiryForm({ carId, carTitle }: Props) {
         rows={4}
         className="field resize-none"
       />
-      {error && <p className="text-sm text-red-400">{error}</p>}
+      {error && <p className="text-sm text-destructive">{error}</p>}
       <button
         type="submit"
         disabled={status === "loading"}
-        className="w-full py-3 rounded-full bg-accent text-background font-medium disabled:opacity-60"
+        className="w-full py-3 rounded-full bg-accent text-accent-foreground font-medium disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
       >
         {status === "loading" ? "Sending…" : "Submit enquiry"}
       </button>
-      <style jsx>{`
-        .field {
-          width: 100%;
-          background: #080805;
-          border: 1px solid #2a2a2a;
-          border-radius: 0.75rem;
-          padding: 0.75rem 1rem;
-          font-size: 0.875rem;
-          font-weight: 300;
-          color: white;
-          outline: none;
-        }
-        .field:focus {
-          border-color: rgba(212, 212, 20, 0.5);
-        }
-      `}</style>
     </form>
   );
 }

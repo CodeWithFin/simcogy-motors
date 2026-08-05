@@ -77,12 +77,12 @@ export default async function CarsPage({
           Find your car
         </h1>
 
-        <Suspense fallback={<p className="text-muted text-sm">Loading filters…</p>}>
+        <Suspense fallback={<p className="text-muted-foreground text-sm">Loading filters…</p>}>
           <CarFilters makes={makes} bodyTypes={bodyTypes} total={total} />
         </Suspense>
 
         {cars.length === 0 ? (
-          <p className="mt-16 text-muted font-light">
+          <p className="mt-16 text-muted-foreground font-light">
             No cars match these filters. Try clearing some filters.
           </p>
         ) : (
@@ -100,7 +100,7 @@ export default async function CarsPage({
                 Previous
               </PageLink>
             )}
-            <span className="text-sm text-muted">
+            <span className="text-sm text-muted-foreground">
               Page {page} of {totalPages}
             </span>
             {page < totalPages && (

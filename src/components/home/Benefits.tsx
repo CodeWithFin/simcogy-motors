@@ -21,7 +21,7 @@ export function Benefits() {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/5 rounded-full blur-[100px] -z-10" />
       <div className="text-center mb-16 flex flex-col items-center">
         <Subheading text="Why Simcogy" />
-        <h2 className="text-3xl md:text-5xl font-medium tracking-tight max-w-2xl leading-tight">
+        <h2 className="text-3xl md:text-5xl font-medium tracking-tight max-w-2xl leading-tight text-foreground">
           Built to cut friction from browse to buy
         </h2>
       </div>
@@ -29,15 +29,15 @@ export function Benefits() {
         {features.map((feature) => (
           <div
             key={feature.title}
-            className="bg-card rounded-4xl p-8 md:p-10 border border-border hover:border-white/10 transition-colors"
+            className="bg-card text-card-foreground rounded-4xl p-8 md:p-10 border border-border hover:border-foreground/15 transition-colors shadow-sm dark:shadow-none"
           >
-            <div className="w-14 h-14 rounded-2xl bg-background border border-border flex items-center justify-center text-accent mb-8 text-xl">
+            <div className="w-14 h-14 rounded-2xl bg-muted border border-border flex items-center justify-center text-accent mb-8 text-xl">
               ◆
             </div>
             <h3 className="text-xl font-medium tracking-tight mb-4">
               {feature.title}
             </h3>
-            <p className="text-muted font-light text-sm leading-relaxed">
+            <p className="text-muted-foreground font-light text-sm leading-relaxed">
               {feature.body}
             </p>
           </div>

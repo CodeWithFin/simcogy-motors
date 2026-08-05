@@ -8,7 +8,7 @@ export default function NotFound() {
         <h1 className="text-4xl font-medium tracking-tight mb-4">
           Page not found
         </h1>
-        <Link href="/" className="text-sm text-muted hover:text-accent">
+        <Link href="/" className="text-sm text-muted-foreground hover:text-accent">
           Back home
         </Link>
       </div>

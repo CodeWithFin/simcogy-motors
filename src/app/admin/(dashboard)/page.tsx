@@ -28,13 +28,13 @@ export default async function AdminHomePage() {
       <div className="flex flex-wrap gap-3">
         <Link
           href="/admin/cars/new"
-          className="px-6 py-3 rounded-full bg-accent text-background font-medium"
+          className="px-6 py-3 rounded-full bg-accent text-accent-foreground font-medium"
         >
           Add car
         </Link>
         <Link
           href="/admin/leads"
-          className="px-6 py-3 rounded-full border border-white/20 font-light"
+          className="px-6 py-3 rounded-full border border-border font-light"
         >
           View leads
         </Link>
@@ -54,7 +54,7 @@ function Stat({
 }) {
   return (
     <div className="bg-card border border-border rounded-2xl p-5">
-      <p className="text-xs text-muted font-light mb-2">{label}</p>
+      <p className="text-xs text-muted-foreground font-light mb-2">{label}</p>
       <p
         className={`text-3xl font-light tracking-tighter ${
           accent ? "text-accent" : ""
