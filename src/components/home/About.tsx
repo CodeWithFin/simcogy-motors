@@ -17,11 +17,11 @@ export function About() {
       <div className="flex flex-col lg:flex-row justify-between gap-16 lg:gap-24">
         <div className="lg:w-1/2">
           <Subheading text="About us" />
-          <h2 className="text-3xl md:text-5xl font-medium tracking-tight leading-tight mb-8 max-w-2xl">
+          <h2 className="text-3xl md:text-5xl font-medium tracking-tight leading-tight mb-8 max-w-2xl text-foreground">
             Verified cars, clear pricing, and less back-and-forth.
           </h2>
-          <div className="flex items-center space-x-6 border-b border-white/10 pb-8 max-w-md">
-            <p className="text-muted font-light text-sm leading-relaxed">
+          <div className="flex items-center space-x-6 border-b border-border pb-8 max-w-md">
+            <p className="text-muted-foreground font-light text-sm leading-relaxed">
               Simcogy Motors lists its own inspected stock — not a marketplace.
               Every car comes with a condition scorecard, transparent specs, and
               a direct path to enquire, book a test drive, or reserve.
@@ -34,7 +34,7 @@ export function About() {
             <span className="text-lg font-light group-hover:text-accent transition-colors">
               Browse inventory
             </span>
-            <span className="w-10 h-10 rounded-xl bg-accent flex items-center justify-center text-background group-hover:scale-105 transition-transform">
+            <span className="w-10 h-10 rounded-xl bg-accent flex items-center justify-center text-accent-foreground group-hover:scale-105 transition-transform">
               →
             </span>
           </Link>
@@ -44,7 +44,7 @@ export function About() {
           {stats.map((stat) => (
             <div key={stat.label} className="flex flex-col">
               <div className="flex items-end mb-2">
-                <span className="text-5xl md:text-6xl font-light tracking-tighter">
+                <span className="text-5xl md:text-6xl font-light tracking-tighter text-foreground">
                   {stat.number}
                 </span>
                 {stat.suffix && (
@@ -53,7 +53,9 @@ export function About() {
                   </span>
                 )}
               </div>
-              <span className="text-muted font-light text-sm">{stat.label}</span>
+              <span className="text-muted-foreground font-light text-sm">
+                {stat.label}
+              </span>
             </div>
           ))}
         </div>

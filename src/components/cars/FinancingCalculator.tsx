@@ -21,11 +21,11 @@ export function FinancingCalculator({ price }: Props) {
   }, [price, downPercent, months, rate]);
 
   return (
-    <div className="bg-card border border-border rounded-4xl p-6 md:p-8">
+    <div className="bg-card text-card-foreground border border-border rounded-4xl p-6 md:p-8 shadow-sm dark:shadow-none">
       <h3 className="text-xl font-medium tracking-tight mb-2">
         Financing estimate
       </h3>
-      <p className="text-muted text-sm font-light mb-6">
+      <p className="text-muted-foreground text-sm font-light mb-6">
         Indicative only — final rates depend on your lender.
       </p>
 
@@ -60,12 +60,14 @@ export function FinancingCalculator({ price }: Props) {
 
       <div className="mt-8 pt-6 border-t border-border flex justify-between items-end">
         <div>
-          <p className="text-xs text-muted font-light mb-1">Est. monthly</p>
+          <p className="text-xs text-muted-foreground font-light mb-1">
+            Est. monthly
+          </p>
           <p className="text-3xl font-medium tracking-tight text-accent">
             {formatKes(Math.round(monthly))}
           </p>
         </div>
-        <p className="text-xs text-muted font-light text-right">
+        <p className="text-xs text-muted-foreground font-light text-right">
           Down {formatKes(Math.round(price * (downPercent / 100)))}
         </p>
       </div>
@@ -93,8 +95,8 @@ function Slider({
   return (
     <label className="block">
       <div className="flex justify-between text-sm mb-2">
-        <span className="text-muted font-light">{label}</span>
-        <span className="font-medium">
+        <span className="text-muted-foreground font-light">{label}</span>
+        <span className="font-medium text-foreground">
           {value}
           {suffix}
         </span>

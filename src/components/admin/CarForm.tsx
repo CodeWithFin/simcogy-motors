@@ -265,19 +265,19 @@ export function CarForm({ car, images = [] }: Props) {
             multiple
             disabled={uploading}
             onChange={(e) => onUpload(e.target.files)}
-            className="text-sm text-muted"
+            className="text-sm text-muted-foreground"
           />
-          {uploading && <p className="text-xs text-muted">Uploading…</p>}
+          {uploading && <p className="text-xs text-muted-foreground">Uploading…</p>}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {localImages.map((img) => (
               <div key={img.id} className="relative aspect-[4/3] rounded-xl overflow-hidden border border-border">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={img.url} alt="" className="w-full h-full object-cover" />
-                <div className="absolute inset-x-0 bottom-0 p-2 flex gap-1 bg-black/50">
-                  <button type="button" onClick={() => setCover(img.id)} className="text-[10px] px-2 py-1 rounded bg-accent text-background">
+                <div className="absolute inset-x-0 bottom-0 p-2 flex gap-1 bg-black/60">
+                  <button type="button" onClick={() => setCover(img.id)} className="text-[10px] px-2 py-1 rounded bg-accent text-accent-foreground">
                     {img.is_cover ? "Cover" : "Set cover"}
                   </button>
-                  <button type="button" onClick={() => deleteImage(img.id)} className="text-[10px] px-2 py-1 rounded bg-white/10">
+                  <button type="button" onClick={() => deleteImage(img.id)} className="text-[10px] px-2 py-1 rounded bg-muted text-foreground">
                     Delete
                   </button>
                 </div>
@@ -285,39 +285,22 @@ export function CarForm({ car, images = [] }: Props) {
             ))}
           </div>
           {!process.env.NEXT_PUBLIC_IMAGEKIT_READY && localImages.length === 0 && (
-            <p className="text-xs text-muted">
+            <p className="text-xs text-muted-foreground">
               Set IMAGEKIT_URL_ENDPOINT in .env to enable uploads.
             </p>
           )}
         </div>
       )}
 
-      {error && <p className="text-sm text-red-400">{error}</p>}
+      {error && <p className="text-sm text-destructive">{error}</p>}
 
       <button
         type="submit"
         disabled={saving}
-        className="px-8 py-3 rounded-full bg-accent text-background font-medium disabled:opacity-60"
+        className="px-8 py-3 rounded-full bg-accent text-accent-foreground font-medium disabled:opacity-60"
       >
         {saving ? "Saving…" : car ? "Save changes" : "Create car"}
       </button>
-
-      <style jsx>{`
-        :global(.field) {
-          width: 100%;
-          background: #080805;
-          border: 1px solid #2a2a2a;
-          border-radius: 0.75rem;
-          padding: 0.75rem 1rem;
-          font-size: 0.875rem;
-          font-weight: 300;
-          color: white;
-          outline: none;
-        }
-        :global(.field:focus) {
-          border-color: rgba(212, 212, 20, 0.5);
-        }
-      `}</style>
     </form>
   );
 }
@@ -331,7 +314,7 @@ function Field({
 }) {
   return (
     <label className="flex flex-col gap-1.5">
-      <span className="text-xs text-muted font-light">{label}</span>
+      <span className="text-xs text-muted-foreground font-light">{label}</span>
       {children}
     </label>
   );

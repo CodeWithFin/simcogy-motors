@@ -9,13 +9,13 @@ export function FeaturedCars({ cars }: { cars: Car[] }) {
       <div className="px-6 md:px-12 max-w-[1440px] mx-auto mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div>
           <Subheading text="Inventory" />
-          <h2 className="text-3xl md:text-5xl font-medium tracking-tight">
+          <h2 className="text-3xl md:text-5xl font-medium tracking-tight text-foreground">
             Featured cars
           </h2>
         </div>
         <Link
           href="/cars"
-          className="hidden md:inline-flex items-center space-x-3 text-sm font-light hover:text-accent transition-colors pb-2 border-b border-white/10 hover:border-accent"
+          className="hidden md:inline-flex items-center space-x-3 text-sm font-light hover:text-accent transition-colors pb-2 border-b border-border hover:border-accent"
         >
           <span>See all cars</span>
           <span aria-hidden>→</span>
@@ -24,7 +24,7 @@ export function FeaturedCars({ cars }: { cars: Car[] }) {
 
       {cars.length === 0 ? (
         <div className="px-6 md:px-12 max-w-[1440px] mx-auto">
-          <p className="text-muted font-light">
+          <p className="text-muted-foreground font-light">
             New stock is on the way. Check back soon or contact us for arrivals.
           </p>
         </div>

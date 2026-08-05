@@ -49,7 +49,7 @@ export default function AdminLoginPage() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Email"
-          className="w-full bg-background border border-border rounded-xl px-4 py-3 text-sm font-light outline-none focus:border-accent/50"
+          className="w-full field"
         />
         <input
           type="password"
@@ -57,13 +57,13 @@ export default function AdminLoginPage() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
-          className="w-full bg-background border border-border rounded-xl px-4 py-3 text-sm font-light outline-none focus:border-accent/50"
+          className="w-full field"
         />
-        {error && <p className="text-sm text-red-400">{error}</p>}
+        {error && <p className="text-sm text-destructive">{error}</p>}
         <button
           type="submit"
           disabled={loading}
-          className="w-full py-3 rounded-full bg-accent text-background font-medium disabled:opacity-60"
+          className="w-full py-3 rounded-full bg-accent text-accent-foreground font-medium disabled:opacity-60"
         >
           {loading ? "Signing in…" : "Sign in"}
         </button>

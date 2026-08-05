@@ -2,14 +2,67 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+  Simcogy Motors palette
+  - Dark: Rydex-inspired charcoal + chartreuse accent (#D4D414)
+  - Light: warm-neutral paper surfaces; accent darkened slightly (#B5B50A)
+    so CTA text on accent still meets WCAG AA
+*/
+
 @layer base {
+  :root {
+    --background: #f4f4ef;
+    --foreground: #141412;
+    --card: #ffffff;
+    --card-foreground: #141412;
+    --border: #e0e0d8;
+    --muted: #ebebe5;
+    --muted-foreground: #5a5a54;
+    --accent: #b5b50a;
+    --accent-foreground: #141412;
+    --destructive: #c62828;
+    --destructive-foreground: #ffffff;
+    --success: #1b7a3d;
+    --success-foreground: #ffffff;
+    --ring: #b5b50a;
+    --glass: rgba(20, 20, 18, 0.04);
+    --glass-border: rgba(20, 20, 18, 0.1);
+    --overlay: rgba(20, 20, 18, 0.08);
+    --hero-fade: rgba(244, 244, 239, 0.92);
+  }
+
+  .dark {
+    --background: #080805;
+    --foreground: #ffffff;
+    --card: #121212;
+    --card-foreground: #ffffff;
+    --border: #2a2a2a;
+    --muted: #1a1a18;
+    --muted-foreground: #8a8a8a;
+    --accent: #d4d414;
+    --accent-foreground: #080805;
+    --destructive: #f07171;
+    --destructive-foreground: #080805;
+    --success: #4ade80;
+    --success-foreground: #080805;
+    --ring: #d4d414;
+    --glass: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --overlay: rgba(255, 255, 255, 0.1);
+    --hero-fade: rgba(8, 8, 5, 0.9);
+  }
+
+  * {
+    @apply border-border;
+  }
+
   body {
     @apply bg-background text-foreground antialiased;
     -webkit-font-smoothing: antialiased;
   }
 
   ::selection {
-    @apply bg-accent text-black;
+    @apply bg-accent text-accent-foreground;
   }
 }
 
@@ -21,10 +74,27 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+
   .glass-panel {
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--glass);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--glass-border);
+  }
+
+  /* Photo gallery / lightbox stay near-black in both themes —
+     conventional for image viewing; intentional exception to the token system. */
+  .photo-surface {
+    background: #0a0a0a;
+    color: #ffffff;
+  }
+
+  .field {
+    @apply w-full bg-background border border-border rounded-xl px-4 py-3 text-sm font-light text-foreground outline-none transition-colors;
+  }
+
+  .field:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 30%, transparent);
   }
 }

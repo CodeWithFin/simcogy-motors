@@ -34,22 +34,22 @@ export function CarFilters({ makes, bodyTypes, total }: Props) {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <p className="text-sm text-muted font-light">
+        <p className="text-sm text-muted-foreground font-light">
           {pending ? "Updating…" : `${total} car${total === 1 ? "" : "s"}`}
         </p>
         <button
           type="button"
           onClick={clear}
-          className="text-xs text-muted hover:text-accent transition-colors"
+          className="text-xs text-muted-foreground hover:text-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
         >
           Clear filters
         </button>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 p-4 md:p-5 rounded-2xl bg-muted/60 border border-border">
         <Field label="Make">
           <select
-            className="input"
+            className="field"
             value={searchParams.get("make") || ""}
             onChange={(e) => update("make", e.target.value)}
           >
@@ -64,7 +64,7 @@ export function CarFilters({ makes, bodyTypes, total }: Props) {
 
         <Field label="Body type">
           <select
-            className="input"
+            className="field"
             value={searchParams.get("bodyType") || ""}
             onChange={(e) => update("bodyType", e.target.value)}
           >
@@ -79,7 +79,7 @@ export function CarFilters({ makes, bodyTypes, total }: Props) {
 
         <Field label="Transmission">
           <select
-            className="input"
+            className="field"
             value={searchParams.get("transmission") || ""}
             onChange={(e) => update("transmission", e.target.value)}
           >
@@ -92,7 +92,7 @@ export function CarFilters({ makes, bodyTypes, total }: Props) {
 
         <Field label="Fuel">
           <select
-            className="input"
+            className="field"
             value={searchParams.get("fuelType") || ""}
             onChange={(e) => update("fuelType", e.target.value)}
           >
@@ -106,7 +106,7 @@ export function CarFilters({ makes, bodyTypes, total }: Props) {
 
         <Field label="Year from">
           <input
-            className="input"
+            className="field"
             type="number"
             placeholder="2015"
             value={searchParams.get("yearMin") || ""}
@@ -116,7 +116,7 @@ export function CarFilters({ makes, bodyTypes, total }: Props) {
 
         <Field label="Year to">
           <input
-            className="input"
+            className="field"
             type="number"
             placeholder="2024"
             value={searchParams.get("yearMax") || ""}
@@ -126,7 +126,7 @@ export function CarFilters({ makes, bodyTypes, total }: Props) {
 
         <Field label="Max price (KES)">
           <input
-            className="input"
+            className="field"
             type="number"
             placeholder="3000000"
             value={searchParams.get("priceMax") || ""}
@@ -136,7 +136,7 @@ export function CarFilters({ makes, bodyTypes, total }: Props) {
 
         <Field label="Max mileage">
           <input
-            className="input"
+            className="field"
             type="number"
             placeholder="100000"
             value={searchParams.get("mileageMax") || ""}
@@ -146,7 +146,7 @@ export function CarFilters({ makes, bodyTypes, total }: Props) {
 
         <Field label="Condition">
           <select
-            className="input"
+            className="field"
             value={searchParams.get("condition") || ""}
             onChange={(e) => update("condition", e.target.value)}
           >
@@ -159,7 +159,7 @@ export function CarFilters({ makes, bodyTypes, total }: Props) {
 
         <Field label="Import">
           <select
-            className="input"
+            className="field"
             value={searchParams.get("importType") || ""}
             onChange={(e) => update("importType", e.target.value)}
           >
@@ -172,7 +172,7 @@ export function CarFilters({ makes, bodyTypes, total }: Props) {
 
         <Field label="Sort">
           <select
-            className="input"
+            className="field"
             value={searchParams.get("sort") || "newest"}
             onChange={(e) => update("sort", e.target.value)}
           >
@@ -186,7 +186,7 @@ export function CarFilters({ makes, bodyTypes, total }: Props) {
 
         <Field label="Search">
           <input
-            className="input"
+            className="field"
             type="search"
             placeholder="Make or model"
             defaultValue={searchParams.get("q") || ""}
@@ -199,23 +199,6 @@ export function CarFilters({ makes, bodyTypes, total }: Props) {
           />
         </Field>
       </div>
-
-      <style jsx>{`
-        :global(.input) {
-          width: 100%;
-          background: #121212;
-          border: 1px solid #2a2a2a;
-          border-radius: 0.75rem;
-          padding: 0.625rem 0.75rem;
-          font-size: 0.875rem;
-          font-weight: 300;
-          color: white;
-          outline: none;
-        }
-        :global(.input:focus) {
-          border-color: rgba(212, 212, 20, 0.5);
-        }
-      `}</style>
     </div>
   );
 }
@@ -229,7 +212,7 @@ function Field({
 }) {
   return (
     <label className="flex flex-col gap-1.5">
-      <span className="text-xs text-muted font-light">{label}</span>
+      <span className="text-xs text-muted-foreground font-light">{label}</span>
       {children}
     </label>
   );
