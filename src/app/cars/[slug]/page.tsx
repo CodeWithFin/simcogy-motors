@@ -75,7 +75,7 @@ export default async function CarDetailPage({ params }: { params: Params }) {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <div className="relative">
-        <Navbar />
+        <Navbar overlay />
         <div className="pt-20 px-2 md:px-4">
           {/* Photo hero stays dark-leaning for viewing contrast — intentional exception */}
           <div className="relative w-full h-[50vh] md:h-[70vh] rounded-4xl overflow-hidden photo-surface ring-1 ring-border dark:ring-0">
@@ -87,7 +87,7 @@ export default async function CarDetailPage({ params }: { params: Params }) {
               className="object-cover"
               sizes="100vw"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/20" />
+            <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-black/30" />
           </div>
         </div>
       </div>

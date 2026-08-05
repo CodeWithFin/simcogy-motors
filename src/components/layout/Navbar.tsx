@@ -10,34 +10,50 @@ const links = [
   { href: "/#contact", label: "Contact" },
 ];
 
-export function Navbar() {
+type Props = {
+  /** Force light text/glass for use over dark photo heroes */
+  overlay?: boolean;
+};
+
+export function Navbar({ overlay = false }: Props) {
   const [open, setOpen] = useState(false);
+  const brand = overlay ? "text-white" : "text-foreground";
+  const link = overlay
+    ? "text-white/80 hover:text-white"
+    : "text-foreground/80 hover:text-foreground";
+  const muted = overlay
+    ? "text-white/60 hover:text-white"
+    : "text-muted-foreground hover:text-foreground";
+  const panel = overlay
+    ? "rounded-full bg-black/35 backdrop-blur-md border border-white/15"
+    : "glass-panel rounded-full";
+  const bar = overlay ? "bg-white" : "bg-foreground";
 
   return (
     <nav className="absolute top-4 inset-x-0 z-50 flex items-center justify-between px-4 md:px-8 w-full max-w-[1440px] mx-auto">
       <Link
         href="/"
-        className="tracking-tighter font-medium text-lg uppercase text-foreground"
+        className={`tracking-tighter font-medium text-lg uppercase ${brand}`}
       >
         Simcogy Motors
       </Link>
 
-      <div className="hidden md:flex glass-panel rounded-full px-6 py-2.5 items-center space-x-6">
-        {links.map((link) => (
+      <div
+        className={`hidden md:flex ${panel} px-6 py-2.5 items-center space-x-6`}
+      >
+        {links.map((item) => (
           <Link
-            key={link.href}
-            href={link.href}
-            className="text-sm font-light text-foreground/80 hover:text-foreground transition-colors"
+            key={item.href}
+            href={item.href}
+            className={`text-sm font-light transition-colors ${link}`}
           >
-            {link.label}
+            {item.label}
           </Link>
         ))}
-        <div className="text-foreground/20">|</div>
-        <Link
-          href="/cars"
-          className="text-muted-foreground hover:text-foreground transition-colors"
-          aria-label="Search cars"
-        >
+        <div className={overlay ? "text-white/25" : "text-foreground/20"}>
+          |
+        </div>
+        <Link href="/cars" className={muted} aria-label="Search cars">
           <SearchIcon />
         </Link>
         <ThemeToggle />
@@ -47,26 +63,26 @@ export function Navbar() {
         <ThemeToggle />
         <button
           type="button"
-          className="glass-panel rounded-full w-10 h-10 flex flex-col justify-center items-center space-y-1 hover:bg-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className={`${panel} w-10 h-10 flex flex-col justify-center items-center space-y-1 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring`}
           onClick={() => setOpen((v) => !v)}
           aria-label="Menu"
         >
-          <div className="w-4 h-[1px] bg-foreground rounded-full" />
-          <div className="w-4 h-[1px] bg-foreground rounded-full" />
-          <div className="w-4 h-[1px] bg-foreground rounded-full" />
+          <div className={`w-4 h-[1px] ${bar} rounded-full`} />
+          <div className={`w-4 h-[1px] ${bar} rounded-full`} />
+          <div className={`w-4 h-[1px] ${bar} rounded-full`} />
         </button>
       </div>
 
       {open && (
         <div className="absolute top-14 right-4 left-4 glass-panel rounded-2xl p-6 flex flex-col gap-4 md:hidden bg-card/95">
-          {links.map((link) => (
+          {links.map((item) => (
             <Link
-              key={link.href}
-              href={link.href}
+              key={item.href}
+              href={item.href}
               className="text-sm font-light text-foreground"
               onClick={() => setOpen(false)}
             >
-              {link.label}
+              {item.label}
             </Link>
           ))}
         </div>

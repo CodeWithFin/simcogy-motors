@@ -15,41 +15,41 @@ export function Hero() {
           className="object-cover scale-105"
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/50 via-background/25 to-hero-fade" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-black/80" />
 
-        <Navbar />
+        <Navbar overlay />
 
         <div className="absolute bottom-0 inset-x-0 p-6 md:p-12 z-20 flex flex-col lg:flex-row justify-between lg:items-end gap-8">
           <div className="max-w-2xl">
             <Subheading text="Verified stock" />
-            <h1 className="text-5xl md:text-7xl font-medium tracking-tighter leading-[1.1] mb-6 text-foreground">
+            <h1 className="text-5xl md:text-7xl font-medium tracking-tighter leading-[1.1] mb-6 text-white">
               Find your next
               <br />
               car with confidence
             </h1>
-            <p className="text-muted-foreground font-light text-sm md:text-base max-w-md">
+            <p className="text-white/70 font-light text-sm md:text-base max-w-md">
               Inspected inventory, clear pricing, and easy test drives — built
               for Kenyan buyers.
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 border-t lg:border-t-0 lg:border-l border-overlay pt-6 lg:pt-0 lg:pl-12 w-full lg:w-auto">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 border-t lg:border-t-0 lg:border-l border-white/15 pt-6 lg:pt-0 lg:pl-12 w-full lg:w-auto">
             <Link
               href="/cars"
-              className="group flex items-center space-x-3 text-lg font-light text-foreground hover:text-accent transition-colors w-full sm:w-auto justify-between"
+              className="group flex items-center space-x-3 text-lg font-light text-white hover:text-accent transition-colors w-full sm:w-auto justify-between"
             >
               <span>Browse inventory</span>
-              <span className="w-8 h-8 rounded-full border border-overlay flex items-center justify-center group-hover:border-accent transition-colors">
+              <span className="w-8 h-8 rounded-full border border-white/25 flex items-center justify-center group-hover:border-accent transition-colors">
                 <ArrowIcon />
               </span>
             </Link>
-            <div className="hidden sm:block w-[1px] h-8 bg-overlay" />
+            <div className="hidden sm:block w-[1px] h-8 bg-white/15" />
             <Link
               href="/#contact"
-              className="group flex items-center space-x-3 text-lg font-light text-foreground hover:text-accent transition-colors w-full sm:w-auto justify-between"
+              className="group flex items-center space-x-3 text-lg font-light text-white hover:text-accent transition-colors w-full sm:w-auto justify-between"
             >
               <span>Get in touch</span>
-              <span className="w-8 h-8 rounded-full border border-overlay flex items-center justify-center group-hover:border-accent transition-colors">
+              <span className="w-8 h-8 rounded-full border border-white/25 flex items-center justify-center group-hover:border-accent transition-colors">
                 <ArrowIcon />
               </span>
             </Link>

@@ -28,10 +28,11 @@ export function CarCard({ car, className = "" }: Props) {
         className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
         sizes="(max-width: 768px) 320px, 400px"
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent dark:from-background/90 dark:via-background/30" />
+      {/* Dark scrim always — keeps car photos visible in light mode (not theme tokens) */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
 
       <div className="absolute top-6 left-6 right-6 flex justify-between items-center z-10 gap-2">
-        <span className="glass-panel px-4 py-1.5 rounded-full text-xs font-medium tracking-widest uppercase text-foreground">
+        <span className="rounded-full bg-black/40 backdrop-blur-md border border-white/15 px-4 py-1.5 text-xs font-medium tracking-widest uppercase text-white">
           {car.make}
         </span>
         {reduced && (
@@ -53,19 +54,19 @@ export function CarCard({ car, className = "" }: Props) {
       </div>
 
       <div className="absolute bottom-6 left-6 right-6 z-10 flex flex-col">
-        <h3 className="text-3xl font-medium tracking-tight mb-4 text-foreground">
+        <h3 className="text-3xl font-medium tracking-tight mb-4 text-white">
           {title}
         </h3>
-        <div className="glass-panel bg-card/90 dark:bg-card/80 rounded-2xl p-4 flex flex-col gap-3 border-none">
-          <div className="flex justify-between items-center pb-3 border-b border-border">
-            <span className="text-xs text-muted-foreground font-light">
+        <div className="rounded-2xl bg-black/55 backdrop-blur-md border border-white/10 p-4 flex flex-col gap-3">
+          <div className="flex justify-between items-center pb-3 border-b border-white/10">
+            <span className="text-xs text-white/70 font-light">
               {car.negotiable ? "Negotiable" : "Fixed price"}
             </span>
-            <span className="text-lg font-medium tracking-tight text-card-foreground">
+            <span className="text-lg font-medium tracking-tight text-white">
               {formatKes(car.price)}
             </span>
           </div>
-          <div className="flex justify-between items-center text-xs font-light text-muted-foreground">
+          <div className="flex justify-between items-center text-xs font-light text-white/80">
             <span>{car.year}</span>
             <span>{car.mileage_km.toLocaleString()} km</span>
             <span className="capitalize">{car.transmission || "—"}</span>
