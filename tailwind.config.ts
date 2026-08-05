@@ -10,12 +10,34 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "#080805",
-        foreground: "#ffffff",
-        accent: "#D4D414",
-        card: "#121212",
-        border: "#2A2A2A",
-        muted: "#888888",
+        background: "var(--background)",
+        foreground: "var(--foreground)",
+        card: {
+          DEFAULT: "var(--card)",
+          foreground: "var(--card-foreground)",
+        },
+        border: "var(--border)",
+        muted: {
+          DEFAULT: "var(--muted)",
+          foreground: "var(--muted-foreground)",
+        },
+        accent: {
+          DEFAULT: "var(--accent)",
+          foreground: "var(--accent-foreground)",
+        },
+        destructive: {
+          DEFAULT: "var(--destructive)",
+          foreground: "var(--destructive-foreground)",
+        },
+        success: {
+          DEFAULT: "var(--success)",
+          foreground: "var(--success-foreground)",
+        },
+        ring: "var(--ring)",
+        overlay: "var(--overlay)",
+        "hero-fade": "var(--hero-fade)",
+        /* Fixed brand exceptions — do not theme-shift */
+        whatsapp: "#25D366",
       },
       fontFamily: {
         sans: ["var(--font-figtree)", "sans-serif"],
