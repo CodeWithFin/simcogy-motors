@@ -72,10 +72,15 @@ export default async function CarsPage({
           </div>
         </div>
 
-        <Subheading text="Inventory" />
-        <h1 className="text-4xl md:text-6xl font-medium tracking-tight mb-10">
-          Find your car
+        <Subheading text="Our stock" />
+        <h1 className="text-4xl md:text-6xl font-medium tracking-tight mb-4">
+          Shop our cars
         </h1>
+        <p className="text-muted-foreground font-light text-sm md:text-base max-w-2xl mb-10">
+          Every vehicle is from Simcogy Motors retail inventory — inspected,
+          priced clearly, and ready to reserve. Filter and browse like a
+          storefront, not a classifieds board.
+        </p>
 
         <Suspense fallback={<p className="text-muted-foreground text-sm">Loading filters…</p>}>
           <CarFilters makes={makes} bodyTypes={bodyTypes} total={total} />

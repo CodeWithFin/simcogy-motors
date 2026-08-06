@@ -1,6 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
-import { carTitle, formatKes } from "@/lib/format";
+import {
+  badgeClass,
+  carTitle,
+  estimateMonthly,
+  formatKes,
+  getCarBadges,
+} from "@/lib/format";
 import type { Car } from "@/lib/types";
 
 type Props = {
@@ -13,8 +19,8 @@ export function CarCard({ car, className = "" }: Props) {
   const image =
     car.cover_url ||
     "https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?q=80&w=800&auto=format&fit=crop";
-  const reduced =
-    car.previous_price && Number(car.previous_price) > Number(car.price);
+  const badges = getCarBadges(car);
+  const monthly = estimateMonthly(car.price);
 
   return (
     <Link
@@ -34,22 +40,14 @@ export function CarCard({ car, className = "" }: Props) {
             {car.make}
           </span>
           <div className="flex flex-wrap gap-1.5 justify-end">
-            {reduced && (
-              <span className="inline-flex items-center gap-1 bg-accent text-accent-foreground text-[11px] px-2.5 py-1 rounded-full font-medium">
-                <span aria-hidden>↓</span>
-                Just reduced
+            {badges.map((b) => (
+              <span
+                key={b.key}
+                className={`inline-flex items-center text-[11px] px-2.5 py-1 rounded-full font-medium ${badgeClass(b.tone)}`}
+              >
+                {b.label}
               </span>
-            )}
-            {car.status === "reserved" && (
-              <span className="inline-flex items-center bg-success text-success-foreground text-[11px] px-2.5 py-1 rounded-full font-medium">
-                Reserved
-              </span>
-            )}
-            {car.status === "sold" && (
-              <span className="inline-flex items-center bg-destructive text-destructive-foreground text-[11px] px-2.5 py-1 rounded-full font-medium">
-                Sold
-              </span>
-            )}
+            ))}
           </div>
         </div>
       </div>
@@ -60,13 +58,23 @@ export function CarCard({ car, className = "" }: Props) {
         </h3>
 
         <div className="mt-auto pt-4">
-          <div className="flex items-baseline justify-between gap-3">
-            <span className="shrink-0 text-xs text-muted-foreground font-light">
-              {car.negotiable ? "Negotiable" : "Fixed price"}
-            </span>
-            <span className="text-right text-lg font-medium tracking-tight text-accent tabular-nums">
-              {formatKes(car.price)}
-            </span>
+          <div className="flex items-start justify-between gap-3">
+            <div>
+              <p className="text-xs text-muted-foreground font-light mb-0.5">
+                Cash price
+              </p>
+              <p className="text-lg font-medium tracking-tight text-accent tabular-nums">
+                {formatKes(car.price)}
+              </p>
+            </div>
+            <div className="text-right">
+              <p className="text-xs text-muted-foreground font-light mb-0.5">
+                Est. monthly
+              </p>
+              <p className="text-lg font-medium tracking-tight tabular-nums">
+                {formatKes(monthly)}
+              </p>
+            </div>
           </div>
 
           <div className="mt-4 grid grid-cols-3 items-center border-t border-border pt-3 text-xs font-light text-muted-foreground">

@@ -230,6 +230,61 @@ export async function getCarImages(carId: string): Promise<CarImage[]> {
   `;
 }
 
+export type InspectionSummary = {
+  id: string;
+  inspector_name: string | null;
+  inspected_at: string;
+  overall_score: number | null;
+  video_url: string | null;
+  notes: string | null;
+  items: {
+    id: string;
+    category: string;
+    item: string;
+    rating: string;
+    remarks: string | null;
+  }[];
+};
+
+export async function getInspectionForCar(
+  carId: string
+): Promise<InspectionSummary | null> {
+  const rows = await sql<
+    {
+      id: string;
+      inspector_name: string | null;
+      inspected_at: string;
+      overall_score: number | null;
+      video_url: string | null;
+      notes: string | null;
+    }[]
+  >`
+    SELECT id, inspector_name, inspected_at, overall_score, video_url, notes
+    FROM inspections
+    WHERE car_id = ${carId}
+    ORDER BY inspected_at DESC
+    LIMIT 1
+  `;
+  if (!rows[0]) return null;
+
+  const items = await sql<
+    {
+      id: string;
+      category: string;
+      item: string;
+      rating: string;
+      remarks: string | null;
+    }[]
+  >`
+    SELECT id, category, item, rating, remarks
+    FROM inspection_items
+    WHERE inspection_id = ${rows[0].id}
+    ORDER BY category, item
+  `;
+
+  return { ...rows[0], items };
+}
+
 export async function getFilterOptions() {
   const makes = await sql<{ make: string }[]>`
     SELECT DISTINCT make FROM cars WHERE status = 'published' ORDER BY make
