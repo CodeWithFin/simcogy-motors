@@ -2,8 +2,8 @@ import { Suspense } from "react";
 import Link from "next/link";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
-import { CarCard } from "@/components/cars/CarCard";
 import { CarFilters } from "@/components/cars/CarFilters";
+import { ShopCarCard } from "@/components/cars/ShopCarCard";
 import { getFilterOptions, getPublishedCars } from "@/lib/cars";
 
 export const revalidate = 60;
@@ -100,7 +100,7 @@ export default async function CarsPage({
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8">
                 {cars.map((car) => (
-                  <CarCard
+                  <ShopCarCard
                     key={car.id}
                     car={car}
                     className="!min-w-0 !w-full md:!w-full"

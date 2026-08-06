@@ -1,49 +1,50 @@
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
-import { CarCard } from "@/components/cars/CarCard";
+import { Subheading } from "@/components/ui/Subheading";
+import HoverRevealCards, { type CardItem } from "@/components/ui/cards";
+import { carTitle, formatKes } from "@/lib/format";
 import type { Car } from "@/lib/types";
 
+const FALLBACK_IMAGE =
+  "https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?q=80&w=1200&auto=format&fit=crop";
+
 export function FeaturedCars({ cars }: { cars: Car[] }) {
-  const items = cars.slice(0, 4);
+  const items: CardItem[] = cars.slice(0, 4).map((car) => ({
+    id: car.id,
+    title: carTitle(car),
+    subtitle: formatKes(car.price),
+    imageUrl: car.cover_url || FALLBACK_IMAGE,
+    href: `/cars/${car.slug}`,
+  }));
 
   return (
-    <section className="px-4 md:px-8 max-w-[1600px] mx-auto mb-24">
-      <div className="bg-white dark:bg-card text-black dark:text-card-foreground rounded-[2.5rem] p-8 md:p-12 lg:p-16 relative overflow-hidden border border-transparent dark:border-border">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
-          <div>
-            <h2 className="font-display text-4xl md:text-5xl font-bold uppercase tracking-tight mb-2">
-              Last Arrivals
-            </h2>
-            <p className="text-xs text-neutral-500 dark:text-muted-foreground max-w-xs">
-              Fresh stock from Simcogy Motors — inspected, priced, and ready to
-              reserve.
-            </p>
-          </div>
-          <Link
-            href="/cars"
-            className="px-6 py-3 rounded-full bg-brand/20 hover:bg-brand text-black font-semibold text-xs uppercase tracking-wide transition-all duration-300 flex items-center gap-2"
-          >
-            All products
-            <ArrowRight className="w-4 h-4" />
-          </Link>
+    <section className="py-24">
+      <div className="px-6 md:px-12 max-w-[1440px] mx-auto mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div>
+          <Subheading text="Inventory" />
+          <h2 className="text-3xl md:text-5xl font-medium tracking-tight text-foreground">
+            Featured cars
+          </h2>
         </div>
+        <Link
+          href="/cars"
+          className="hidden md:inline-flex items-center space-x-3 text-sm font-light hover:text-accent transition-colors pb-2 border-b border-border hover:border-accent"
+        >
+          <span>See all cars</span>
+          <span aria-hidden>→</span>
+        </Link>
+      </div>
 
-        {items.length === 0 ? (
-          <p className="text-neutral-500 dark:text-muted-foreground text-sm font-light">
+      {items.length === 0 ? (
+        <div className="px-6 md:px-12 max-w-[1440px] mx-auto">
+          <p className="text-muted-foreground font-light">
             New stock is on the way. Check back soon or contact us for arrivals.
           </p>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {items.map((car) => (
-              <CarCard
-                key={car.id}
-                car={car}
-                className="!min-w-0 !w-full md:!w-full"
-              />
-            ))}
-          </div>
-        )}
-      </div>
+        </div>
+      ) : (
+        <div className="px-6 md:px-12 max-w-[1440px] mx-auto">
+          <HoverRevealCards items={items} />
+        </div>
+      )}
     </section>
   );
 }

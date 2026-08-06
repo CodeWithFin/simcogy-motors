@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Plus } from "lucide-react";
 import {
   badgeClass,
   carTitle,
+  estimateMonthly,
   formatKes,
   getCarBadges,
 } from "@/lib/format";
@@ -15,71 +15,82 @@ type Props = {
   className?: string;
 };
 
+/** Homepage / scroll-row card — original dual-price layout */
 export function CarCard({ car, className = "" }: Props) {
   const title = carTitle(car);
   const image =
     car.cover_url ||
     "https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?q=80&w=800&auto=format&fit=crop";
   const badges = getCarBadges(car);
-  const subtitle = [
-    String(car.year),
-    car.fuel_type,
-    `${car.mileage_km.toLocaleString()} km`,
-  ]
-    .filter(Boolean)
-    .join(" · ");
+  const monthly = estimateMonthly(car.price);
 
   return (
     <Link
       href={`/cars/${car.slug}`}
       className={cn(
-        "group flex flex-col min-w-[260px] md:min-w-[280px] w-full md:w-[280px] shrink-0 snap-center",
-        "rounded-2xl border border-border bg-card text-card-foreground p-3",
-        "shadow-sm hover:shadow-md hover:border-foreground/15 transition-all duration-300",
-        "dark:shadow-none dark:hover:border-border dark:hover:bg-muted/40",
+        "group flex h-full flex-col min-w-[300px] md:min-w-[380px] w-full md:w-[380px] shrink-0 snap-center rounded-4xl overflow-hidden bg-card text-card-foreground border border-border shadow-sm hover:border-foreground/20 transition-colors",
         className
       )}
     >
-      <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl bg-muted">
+      <div className="relative aspect-[4/3] w-full shrink-0 overflow-hidden bg-muted">
         <Image
           src={image}
           alt={title}
           fill
-          className="object-cover group-hover:scale-105 transition-transform duration-500"
-          sizes="(max-width: 768px) 260px, 280px"
+          className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+          sizes="(max-width: 768px) 300px, 380px"
         />
-        {badges[0] && (
-          <span
-            className={cn(
-              "absolute top-3 left-3 z-10 inline-flex items-center text-[10px] px-2.5 py-1 rounded-full font-semibold tracking-wide shadow-sm",
-              badgeClass(badges[0].tone)
-            )}
-          >
-            {badges[0].label}
+        <div className="absolute top-4 left-4 right-4 flex justify-between items-start gap-2 z-10">
+          <span className="rounded-full bg-black/55 backdrop-blur-sm px-3 py-1.5 text-[11px] font-medium tracking-widest uppercase text-white">
+            {car.make}
           </span>
-        )}
+          <div className="flex flex-wrap gap-1.5 justify-end">
+            {badges.map((b) => (
+              <span
+                key={b.key}
+                className={`inline-flex items-center text-[11px] px-2.5 py-1 rounded-full font-medium ${badgeClass(b.tone)}`}
+              >
+                {b.label}
+              </span>
+            ))}
+          </div>
+        </div>
       </div>
 
-      <div className="flex flex-col gap-3 pt-4 px-1 pb-1">
-        <div className="min-w-0">
-          <h3 className="font-bold text-sm text-foreground line-clamp-2 leading-snug">
-            {title}
-          </h3>
-          <p className="mt-1 text-xs text-muted-foreground capitalize line-clamp-1">
-            {subtitle}
-          </p>
-        </div>
+      <div className="flex flex-1 flex-col p-5 md:p-6">
+        <h3 className="min-h-[3.5rem] md:min-h-[4rem] text-xl md:text-2xl font-medium tracking-tight leading-snug line-clamp-2">
+          {title}
+        </h3>
 
-        <div className="flex items-center justify-between gap-3 border-t border-border pt-3">
-          <span className="text-sm font-bold text-foreground tabular-nums">
-            {formatKes(car.price)}
-          </span>
-          <span
-            aria-hidden
-            className="w-8 h-8 shrink-0 rounded-lg bg-brand/30 group-hover:bg-brand flex items-center justify-center text-neutral-900 transition-colors"
-          >
-            <Plus className="w-4 h-4" strokeWidth={2.5} />
-          </span>
+        <div className="mt-auto pt-4">
+          <div className="flex items-start justify-between gap-3">
+            <div>
+              <p className="text-xs text-muted-foreground font-light mb-0.5">
+                Cash price
+              </p>
+              <p className="text-lg font-medium tracking-tight text-accent tabular-nums">
+                {formatKes(car.price)}
+              </p>
+            </div>
+            <div className="text-right">
+              <p className="text-xs text-muted-foreground font-light mb-0.5">
+                Est. monthly
+              </p>
+              <p className="text-lg font-medium tracking-tight tabular-nums">
+                {formatKes(monthly)}
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-4 grid grid-cols-3 items-center border-t border-border pt-3 text-xs font-light text-muted-foreground">
+            <span className="text-left">{car.year}</span>
+            <span className="text-center tabular-nums">
+              {car.mileage_km.toLocaleString()} km
+            </span>
+            <span className="text-right capitalize">
+              {car.transmission || "—"}
+            </span>
+          </div>
         </div>
       </div>
     </Link>
