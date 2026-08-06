@@ -19,10 +19,9 @@ export function CarCard({ car, className = "" }: Props) {
   return (
     <Link
       href={`/cars/${car.slug}`}
-      className={`group flex flex-col min-w-[300px] md:min-w-[380px] w-full md:w-[380px] shrink-0 snap-center rounded-4xl overflow-hidden bg-card text-card-foreground border border-border shadow-sm hover:border-foreground/20 transition-colors ${className}`}
+      className={`group flex h-full flex-col min-w-[300px] md:min-w-[380px] w-full md:w-[380px] shrink-0 snap-center rounded-4xl overflow-hidden bg-card text-card-foreground border border-border shadow-sm hover:border-foreground/20 transition-colors ${className}`}
     >
-      {/* Image only — no theme wash over the photo */}
-      <div className="relative aspect-[4/3] w-full overflow-hidden bg-muted">
+      <div className="relative aspect-[4/3] w-full shrink-0 overflow-hidden bg-muted">
         <Image
           src={image}
           alt={title}
@@ -55,22 +54,30 @@ export function CarCard({ car, className = "" }: Props) {
         </div>
       </div>
 
-      <div className="flex flex-col gap-3 p-5 md:p-6">
-        <h3 className="text-xl md:text-2xl font-medium tracking-tight leading-snug">
+      <div className="flex flex-1 flex-col p-5 md:p-6">
+        <h3 className="min-h-[3.5rem] md:min-h-[4rem] text-xl md:text-2xl font-medium tracking-tight leading-snug line-clamp-2">
           {title}
         </h3>
-        <div className="flex justify-between items-baseline gap-3">
-          <span className="text-xs text-muted-foreground font-light">
-            {car.negotiable ? "Negotiable" : "Fixed price"}
-          </span>
-          <span className="text-lg font-medium tracking-tight text-accent">
-            {formatKes(car.price)}
-          </span>
-        </div>
-        <div className="flex justify-between items-center text-xs font-light text-muted-foreground pt-3 border-t border-border">
-          <span>{car.year}</span>
-          <span>{car.mileage_km.toLocaleString()} km</span>
-          <span className="capitalize">{car.transmission || "—"}</span>
+
+        <div className="mt-auto pt-4">
+          <div className="flex items-baseline justify-between gap-3">
+            <span className="shrink-0 text-xs text-muted-foreground font-light">
+              {car.negotiable ? "Negotiable" : "Fixed price"}
+            </span>
+            <span className="text-right text-lg font-medium tracking-tight text-accent tabular-nums">
+              {formatKes(car.price)}
+            </span>
+          </div>
+
+          <div className="mt-4 grid grid-cols-3 items-center border-t border-border pt-3 text-xs font-light text-muted-foreground">
+            <span className="text-left">{car.year}</span>
+            <span className="text-center tabular-nums">
+              {car.mileage_km.toLocaleString()} km
+            </span>
+            <span className="text-right capitalize">
+              {car.transmission || "—"}
+            </span>
+          </div>
         </div>
       </div>
     </Link>
