@@ -25,7 +25,7 @@ export default async function AdminFeaturedPage() {
           Featured cars
         </h1>
         <p className="text-sm text-muted-foreground font-light max-w-xl">
-          Featured cars appear in the homepage hover grid. Only our own stock
+          Featured cars appear in the homepage Last Arrivals section. Only our own stock
           can be featured — toggle cars on or off below.
         </p>
       </div>
