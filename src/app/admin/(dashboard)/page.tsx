@@ -12,6 +12,7 @@ export default async function AdminHomePage() {
   }
 
   const published = cars.filter((c) => c.status === "published").length;
+  const featured = cars.filter((c) => c.featured).length;
   const newLeads = leads.filter((l) => l.status === "new").length;
 
   return (
@@ -22,8 +23,8 @@ export default async function AdminHomePage() {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
         <Stat label="Total cars" value={cars.length} />
         <Stat label="Published" value={published} />
-        <Stat label="Leads" value={leads.length} />
-        <Stat label="New leads" value={newLeads} accent />
+        <Stat label="Featured" value={featured} accent />
+        <Stat label="New leads" value={newLeads} />
       </div>
       <div className="flex flex-wrap gap-3">
         <Link
@@ -31,6 +32,12 @@ export default async function AdminHomePage() {
           className="px-6 py-3 rounded-full bg-accent text-accent-foreground font-medium"
         >
           Add car
+        </Link>
+        <Link
+          href="/admin/featured"
+          className="px-6 py-3 rounded-full border border-border font-light"
+        >
+          Manage featured
         </Link>
         <Link
           href="/admin/leads"
