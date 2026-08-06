@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Subheading } from "@/components/ui/Subheading";
 
 export function ContactCta() {
-  const whatsapp = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "254700000000";
+  const whatsapp = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "254711812043";
   const wa = `https://wa.me/${whatsapp}?text=${encodeURIComponent(
     "Hi Simcogy Motors, I'm interested in your inventory."
   )}`;
@@ -19,8 +19,8 @@ export function ContactCta() {
             Ready to view a car?
           </h2>
           <p className="text-muted-foreground font-light text-sm leading-relaxed">
-            Message us on WhatsApp or browse the full inventory and send an
-            enquiry from any listing.
+            Message us on WhatsApp about a car from our stock, or browse the
+            full inventory and send an enquiry from any listing.
           </p>
         </div>
         <div className="flex flex-col sm:flex-row gap-4">

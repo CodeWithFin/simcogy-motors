@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { FeaturedToggle } from "@/components/admin/FeaturedToggle";
 import { getAllCarsAdmin } from "@/lib/cars";
 import { carTitle, formatKes } from "@/lib/format";
 import type { Car } from "@/lib/types";
@@ -16,12 +17,20 @@ export default async function AdminCarsPage() {
     <div>
       <div className="flex items-center justify-between mb-8 gap-4">
         <h1 className="text-3xl font-medium tracking-tight">Cars</h1>
-        <Link
-          href="/admin/cars/new"
-          className="px-5 py-2.5 rounded-full bg-accent text-accent-foreground text-sm font-medium"
-        >
-          Add car
-        </Link>
+        <div className="flex items-center gap-3">
+          <Link
+            href="/admin/featured"
+            className="px-5 py-2.5 rounded-full border border-border text-sm font-light hover:border-accent transition-colors"
+          >
+            Featured
+          </Link>
+          <Link
+            href="/admin/cars/new"
+            className="px-5 py-2.5 rounded-full bg-accent text-accent-foreground text-sm font-medium"
+          >
+            Add car
+          </Link>
+        </div>
       </div>
 
       {cars.length === 0 ? (
@@ -29,12 +38,14 @@ export default async function AdminCarsPage() {
       ) : (
         <div className="space-y-3">
           {cars.map((car) => (
-            <Link
+            <div
               key={car.id}
-              href={`/admin/cars/${car.id}`}
-              className="flex items-center gap-4 bg-card border border-border rounded-2xl p-3 hover:border-border transition-colors"
+              className="flex items-center gap-4 bg-card border border-border rounded-2xl p-3"
             >
-              <div className="relative w-20 h-16 rounded-xl overflow-hidden bg-background shrink-0">
+              <Link
+                href={`/admin/cars/${car.id}`}
+                className="relative w-20 h-16 rounded-xl overflow-hidden bg-background shrink-0"
+              >
                 {car.cover_url ? (
                   <Image
                     src={car.cover_url}
@@ -44,15 +55,25 @@ export default async function AdminCarsPage() {
                     sizes="80px"
                   />
                 ) : null}
-              </div>
-              <div className="flex-1 min-w-0">
+              </Link>
+              <Link
+                href={`/admin/cars/${car.id}`}
+                className="flex-1 min-w-0 hover:text-accent transition-colors"
+              >
                 <p className="font-medium truncate">{carTitle(car)}</p>
                 <p className="text-xs text-muted-foreground font-light">
                   {formatKes(car.price)} · {car.status}
+                  {car.featured ? " · featured" : ""}
                 </p>
-              </div>
-              <span className="text-muted-foreground text-sm">Edit →</span>
-            </Link>
+              </Link>
+              <FeaturedToggle carId={car.id} featured={car.featured} />
+              <Link
+                href={`/admin/cars/${car.id}`}
+                className="text-muted-foreground text-sm shrink-0 hover:text-accent"
+              >
+                Edit →
+              </Link>
+            </div>
           ))}
         </div>
       )}

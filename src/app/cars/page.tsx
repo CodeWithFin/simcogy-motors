@@ -4,7 +4,6 @@ import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
 import { CarCard } from "@/components/cars/CarCard";
 import { CarFilters } from "@/components/cars/CarFilters";
-import { Subheading } from "@/components/ui/Subheading";
 import { getFilterOptions, getPublishedCars } from "@/lib/cars";
 
 export const revalidate = 60;
@@ -65,51 +64,70 @@ export default async function CarsPage({
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <div className="relative pt-24 pb-8 px-6 md:px-12 max-w-[1440px] mx-auto w-full">
+      <div className="relative pt-24 pb-16 px-4 md:px-8 max-w-[1600px] mx-auto w-full">
         <div className="fixed top-0 inset-x-0 z-50 pointer-events-none">
           <div className="pointer-events-auto relative h-16">
             <Navbar />
           </div>
         </div>
 
-        <Subheading text="Inventory" />
-        <h1 className="text-4xl md:text-6xl font-medium tracking-tight mb-10">
-          Find your car
-        </h1>
-
-        <Suspense fallback={<p className="text-muted-foreground text-sm">Loading filters…</p>}>
-          <CarFilters makes={makes} bodyTypes={bodyTypes} total={total} />
-        </Suspense>
-
-        {cars.length === 0 ? (
-          <p className="mt-16 text-muted-foreground font-light">
-            No cars match these filters. Try clearing some filters.
+        <div className="mb-10 md:mb-12">
+          <h1 className="font-display text-4xl md:text-6xl font-bold uppercase tracking-tight mb-3">
+            Our stock
+          </h1>
+          <p className="text-muted-foreground text-xs md:text-sm max-w-md">
+            Every vehicle is from Simcogy Motors retail inventory — inspected,
+            priced clearly, and ready to reserve.
           </p>
-        ) : (
-          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-            {cars.map((car) => (
-              <CarCard key={car.id} car={car} className="!min-w-0 !w-full md:!w-full" />
-            ))}
-          </div>
-        )}
+        </div>
 
-        {totalPages > 1 && (
-          <div className="mt-12 flex items-center justify-center gap-4">
-            {page > 1 && (
-              <PageLink page={page - 1} params={params}>
-                Previous
-              </PageLink>
+        <div className="flex flex-col lg:flex-row gap-8 lg:gap-10 items-start">
+          <Suspense
+            fallback={
+              <aside className="w-full lg:w-[280px] xl:w-[300px] shrink-0 rounded-2xl border border-border bg-muted/60 p-5">
+                <p className="text-muted-foreground text-sm">Loading filters…</p>
+              </aside>
+            }
+          >
+            <CarFilters makes={makes} bodyTypes={bodyTypes} total={total} />
+          </Suspense>
+
+          <div className="min-w-0 flex-1 w-full bg-white dark:bg-card text-black dark:text-card-foreground rounded-[2.5rem] p-6 md:p-8 lg:p-10 border border-transparent dark:border-border">
+            {cars.length === 0 ? (
+              <p className="text-neutral-500 dark:text-muted-foreground text-sm font-light">
+                No cars match these filters. Try clearing some filters.
+              </p>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8">
+                {cars.map((car) => (
+                  <CarCard
+                    key={car.id}
+                    car={car}
+                    className="!min-w-0 !w-full md:!w-full"
+                  />
+                ))}
+              </div>
             )}
-            <span className="text-sm text-muted-foreground">
-              Page {page} of {totalPages}
-            </span>
-            {page < totalPages && (
-              <PageLink page={page + 1} params={params}>
-                Next
-              </PageLink>
+
+            {totalPages > 1 && (
+              <div className="mt-12 flex items-center justify-center gap-4">
+                {page > 1 && (
+                  <PageLink page={page - 1} params={params}>
+                    Previous
+                  </PageLink>
+                )}
+                <span className="text-sm text-neutral-500 dark:text-muted-foreground">
+                  Page {page} of {totalPages}
+                </span>
+                {page < totalPages && (
+                  <PageLink page={page + 1} params={params}>
+                    Next
+                  </PageLink>
+                )}
+              </div>
             )}
           </div>
-        )}
+        </div>
       </div>
       <Footer />
     </div>
@@ -134,7 +152,7 @@ function PageLink({
   return (
     <Link
       href={`/cars?${qs.toString()}`}
-      className="text-sm font-light hover:text-accent transition-colors"
+      className="text-sm font-medium hover:text-brand transition-colors"
     >
       {children}
     </Link>

@@ -166,6 +166,31 @@ export async function getFeaturedCars(limit = 6): Promise<Car[]> {
   return fallback.cars;
 }
 
+export async function getReducedCars(limit = 4): Promise<Car[]> {
+  return sql<Car[]>`
+    SELECT
+      c.*,
+      (
+        SELECT ci.url FROM car_images ci
+        WHERE ci.car_id = c.id
+        ORDER BY ci.is_cover DESC, ci.position ASC
+        LIMIT 1
+      ) AS cover_url,
+      (
+        SELECT i.overall_score FROM inspections i
+        WHERE i.car_id = c.id
+        ORDER BY i.inspected_at DESC
+        LIMIT 1
+      ) AS overall_score
+    FROM cars c
+    WHERE c.status = 'published'
+      AND c.previous_price IS NOT NULL
+      AND c.previous_price > c.price
+    ORDER BY c.listed_at DESC NULLS LAST, c.created_at DESC
+    LIMIT ${limit}
+  `;
+}
+
 export async function getCarBySlug(slug: string): Promise<Car | null> {
   const rows = await sql<Car[]>`
     SELECT
@@ -203,6 +228,61 @@ export async function getCarImages(carId: string): Promise<CarImage[]> {
     WHERE car_id = ${carId}
     ORDER BY is_cover DESC, position ASC
   `;
+}
+
+export type InspectionSummary = {
+  id: string;
+  inspector_name: string | null;
+  inspected_at: string;
+  overall_score: number | null;
+  video_url: string | null;
+  notes: string | null;
+  items: {
+    id: string;
+    category: string;
+    item: string;
+    rating: string;
+    remarks: string | null;
+  }[];
+};
+
+export async function getInspectionForCar(
+  carId: string
+): Promise<InspectionSummary | null> {
+  const rows = await sql<
+    {
+      id: string;
+      inspector_name: string | null;
+      inspected_at: string;
+      overall_score: number | null;
+      video_url: string | null;
+      notes: string | null;
+    }[]
+  >`
+    SELECT id, inspector_name, inspected_at, overall_score, video_url, notes
+    FROM inspections
+    WHERE car_id = ${carId}
+    ORDER BY inspected_at DESC
+    LIMIT 1
+  `;
+  if (!rows[0]) return null;
+
+  const items = await sql<
+    {
+      id: string;
+      category: string;
+      item: string;
+      rating: string;
+      remarks: string | null;
+    }[]
+  >`
+    SELECT id, category, item, rating, remarks
+    FROM inspection_items
+    WHERE inspection_id = ${rows[0].id}
+    ORDER BY category, item
+  `;
+
+  return { ...rows[0], items };
 }
 
 export async function getFilterOptions() {

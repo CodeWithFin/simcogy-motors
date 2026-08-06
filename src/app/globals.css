@@ -29,9 +29,11 @@
     --glass-border: rgba(20, 20, 18, 0.1);
     --overlay: rgba(20, 20, 18, 0.08);
     --hero-fade: rgba(244, 244, 239, 0.92);
+    color-scheme: light;
   }
 
-  .dark {
+  /* html.dark — next-themes sets class on <html>; must beat :root */
+  html.dark {
     --background: #080805;
     --foreground: #ffffff;
     --card: #121212;
@@ -50,14 +52,19 @@
     --glass-border: rgba(255, 255, 255, 0.1);
     --overlay: rgba(255, 255, 255, 0.1);
     --hero-fade: rgba(8, 8, 5, 0.9);
+    color-scheme: dark;
   }
 
   * {
     @apply border-border;
   }
 
+  html {
+    @apply bg-background;
+  }
+
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply bg-background text-foreground antialiased min-h-screen;
     -webkit-font-smoothing: antialiased;
   }
 

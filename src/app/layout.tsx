@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Figtree } from "next/font/google";
+import { Figtree, Oswald } from "next/font/google";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import "./globals.css";
 
@@ -9,13 +9,19 @@ const figtree = Figtree({
   variable: "--font-figtree",
 });
 
+const oswald = Oswald({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600"],
+  variable: "--font-oswald",
+});
+
 export const metadata: Metadata = {
   title: {
     default: "Simcogy Motors",
     template: "%s | Simcogy Motors",
   },
   description:
-    "Verified used cars in Kenya. Inspected stock, transparent pricing, and easy test drive booking.",
+    "Simcogy Motors sells its own verified used cars in Kenya. Inspected stock, transparent pricing, and easy test drive booking — not a marketplace.",
 };
 
 export default function RootLayout({
@@ -25,7 +31,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${figtree.variable} font-sans`}>
+      <body className={`${figtree.variable} ${oswald.variable} font-sans`}>
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>

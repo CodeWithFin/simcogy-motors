@@ -3,10 +3,12 @@
 import Link from "next/link";
 import { useState } from "react";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
+import { cn } from "@/lib/utils";
 
 const links = [
   { href: "/cars", label: "Inventory" },
-  { href: "/#about", label: "About" },
+  { href: "/#financing", label: "Financing" },
+  { href: "/#trade-in", label: "Trade-in" },
   { href: "/#contact", label: "Contact" },
 ];
 
@@ -17,59 +19,104 @@ type Props = {
 
 export function Navbar({ overlay = false }: Props) {
   const [open, setOpen] = useState(false);
-  const brand = overlay ? "text-white" : "text-foreground";
-  const link = overlay
-    ? "text-white/80 hover:text-white"
-    : "text-foreground/80 hover:text-foreground";
-  const muted = overlay
-    ? "text-white/60 hover:text-white"
-    : "text-muted-foreground hover:text-foreground";
-  const panel = overlay
-    ? "rounded-full bg-black/35 backdrop-blur-md border border-white/15"
-    : "glass-panel rounded-full";
-  const bar = overlay ? "bg-white" : "bg-foreground";
 
   return (
     <nav className="absolute top-4 inset-x-0 z-50 flex items-center justify-between px-4 md:px-8 w-full max-w-[1440px] mx-auto">
       <Link
         href="/"
-        className={`tracking-tighter font-medium text-lg uppercase ${brand}`}
+        className={cn(
+          "tracking-tighter font-medium text-lg uppercase",
+          overlay ? "text-white" : "text-foreground"
+        )}
       >
         Simcogy Motors
       </Link>
 
       <div
-        className={`hidden md:flex ${panel} px-6 py-2.5 items-center space-x-6`}
+        className={cn(
+          "hidden md:flex px-6 py-2.5 items-center space-x-6 rounded-full",
+          overlay
+            ? "bg-black/35 backdrop-blur-md border border-white/15"
+            : "bg-foreground text-background"
+        )}
       >
         {links.map((item) => (
           <Link
             key={item.href}
             href={item.href}
-            className={`text-sm font-light transition-colors ${link}`}
+            className={cn(
+              "text-sm font-light transition-colors",
+              overlay
+                ? "text-white/80 hover:text-white"
+                : "text-background/80 hover:text-background"
+            )}
           >
             {item.label}
           </Link>
         ))}
-        <div className={overlay ? "text-white/25" : "text-foreground/20"}>
+        <div
+          className={overlay ? "text-white/25" : "text-background/25"}
+          aria-hidden
+        >
           |
         </div>
-        <Link href="/cars" className={muted} aria-label="Search cars">
+        <Link
+          href="/cars"
+          className={
+            overlay
+              ? "text-white/60 hover:text-white"
+              : "text-background/60 hover:text-background"
+          }
+          aria-label="Search cars"
+        >
           <SearchIcon />
         </Link>
-        <ThemeToggle />
+        <ThemeToggle
+          className={
+            overlay
+              ? "text-white/70 hover:text-white hover:bg-white/10 ring-offset-transparent"
+              : "text-background/70 hover:text-background hover:bg-background/10 ring-offset-transparent"
+          }
+        />
       </div>
 
       <div className="flex items-center gap-2 md:hidden">
-        <ThemeToggle />
+        <ThemeToggle
+          className={
+            overlay
+              ? "text-white/70 hover:text-white hover:bg-white/10"
+              : undefined
+          }
+        />
         <button
           type="button"
-          className={`${panel} w-10 h-10 flex flex-col justify-center items-center space-y-1 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring`}
+          className={cn(
+            "w-10 h-10 flex flex-col justify-center items-center space-y-1 rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+            overlay
+              ? "bg-black/35 backdrop-blur-md border border-white/15"
+              : "bg-foreground"
+          )}
           onClick={() => setOpen((v) => !v)}
           aria-label="Menu"
         >
-          <div className={`w-4 h-[1px] ${bar} rounded-full`} />
-          <div className={`w-4 h-[1px] ${bar} rounded-full`} />
-          <div className={`w-4 h-[1px] ${bar} rounded-full`} />
+          <div
+            className={cn(
+              "w-4 h-[1px] rounded-full",
+              overlay ? "bg-white" : "bg-background"
+            )}
+          />
+          <div
+            className={cn(
+              "w-4 h-[1px] rounded-full",
+              overlay ? "bg-white" : "bg-background"
+            )}
+          />
+          <div
+            className={cn(
+              "w-4 h-[1px] rounded-full",
+              overlay ? "bg-white" : "bg-background"
+            )}
+          />
         </button>
       </div>
 

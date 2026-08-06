@@ -3,8 +3,8 @@ import { ArrowRight } from "lucide-react";
 import { CarCard } from "@/components/cars/CarCard";
 import type { Car } from "@/lib/types";
 
-export function FeaturedCars({ cars }: { cars: Car[] }) {
-  const items = cars.slice(0, 4);
+export function PriceDrops({ cars }: { cars: Car[] }) {
+  if (cars.length === 0) return null;
 
   return (
     <section className="px-4 md:px-8 max-w-[1600px] mx-auto mb-24">
@@ -12,11 +12,11 @@ export function FeaturedCars({ cars }: { cars: Car[] }) {
         <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
           <div>
             <h2 className="font-display text-4xl md:text-5xl font-bold uppercase tracking-tight mb-2">
-              Last Arrivals
+              Just reduced
             </h2>
             <p className="text-xs text-neutral-500 dark:text-muted-foreground max-w-xs">
-              Fresh stock from Simcogy Motors — inspected, priced, and ready to
-              reserve.
+              Price drops on inspected Simcogy Motors stock — same cars, better
+              value.
             </p>
           </div>
           <Link
@@ -27,22 +27,11 @@ export function FeaturedCars({ cars }: { cars: Car[] }) {
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
-
-        {items.length === 0 ? (
-          <p className="text-neutral-500 dark:text-muted-foreground text-sm font-light">
-            New stock is on the way. Check back soon or contact us for arrivals.
-          </p>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {items.map((car) => (
-              <CarCard
-                key={car.id}
-                car={car}
-                className="!min-w-0 !w-full md:!w-full"
-              />
-            ))}
-          </div>
-        )}
+        <div className="flex gap-8 overflow-x-auto hide-scrollbar pb-2 snap-x snap-mandatory">
+          {cars.map((car) => (
+            <CarCard key={car.id} car={car} />
+          ))}
+        </div>
       </div>
     </section>
   );
