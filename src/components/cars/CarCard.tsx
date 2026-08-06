@@ -33,7 +33,7 @@ export function CarCard({ car, className = "" }: Props) {
       href={`/cars/${car.slug}`}
       className={`group block min-w-[260px] md:min-w-[280px] w-full md:w-[280px] shrink-0 snap-center ${className}`}
     >
-      <div className="bg-neutral-100 rounded-2xl p-4 mb-4 relative transition-all duration-300 group-hover:shadow-lg">
+      <div className="bg-neutral-100 dark:bg-muted rounded-2xl p-4 mb-4 relative transition-all duration-300 group-hover:shadow-lg dark:group-hover:shadow-none dark:group-hover:ring-1 dark:group-hover:ring-border">
         {badges[0] && (
           <span
             className={`absolute top-4 left-4 z-10 inline-flex items-center text-[10px] px-2.5 py-1 rounded-full font-medium ${badgeClass(badges[0].tone)}`}
@@ -54,15 +54,15 @@ export function CarCard({ car, className = "" }: Props) {
 
       <div className="flex justify-between items-end gap-3">
         <div className="min-w-0">
-          <h3 className="font-bold text-sm mb-1 text-neutral-900 line-clamp-2 leading-snug">
+          <h3 className="font-bold text-sm mb-1 text-neutral-900 dark:text-foreground line-clamp-2 leading-snug">
             {title}
           </h3>
-          <p className="text-xs text-neutral-500 capitalize line-clamp-1">
+          <p className="text-xs text-neutral-500 dark:text-muted-foreground capitalize line-clamp-1">
             {subtitle}
           </p>
         </div>
         <div className="flex items-center gap-2 shrink-0">
-          <span className="text-sm font-bold text-neutral-900 tabular-nums whitespace-nowrap">
+          <span className="text-sm font-bold text-neutral-900 dark:text-foreground tabular-nums whitespace-nowrap">
             {formatKes(car.price)}
           </span>
           <span

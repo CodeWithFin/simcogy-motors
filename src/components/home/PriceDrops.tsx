@@ -8,13 +8,13 @@ export function PriceDrops({ cars }: { cars: Car[] }) {
 
   return (
     <section className="px-4 md:px-8 max-w-[1600px] mx-auto mb-24">
-      <div className="bg-white text-black rounded-[2.5rem] p-8 md:p-12 lg:p-16 relative overflow-hidden">
+      <div className="bg-white dark:bg-card text-black dark:text-card-foreground rounded-[2.5rem] p-8 md:p-12 lg:p-16 relative overflow-hidden border border-transparent dark:border-border">
         <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
           <div>
             <h2 className="font-display text-4xl md:text-5xl font-bold uppercase tracking-tight mb-2">
               Just reduced
             </h2>
-            <p className="text-xs text-neutral-500 max-w-xs">
+            <p className="text-xs text-neutral-500 dark:text-muted-foreground max-w-xs">
               Price drops on inspected Simcogy Motors stock — same cars, better
               value.
             </p>

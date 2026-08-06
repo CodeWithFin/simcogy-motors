@@ -92,9 +92,9 @@ export default async function CarsPage({
             <CarFilters makes={makes} bodyTypes={bodyTypes} total={total} />
           </Suspense>
 
-          <div className="min-w-0 flex-1 w-full bg-white text-black rounded-[2.5rem] p-6 md:p-8 lg:p-10">
+          <div className="min-w-0 flex-1 w-full bg-white dark:bg-card text-black dark:text-card-foreground rounded-[2.5rem] p-6 md:p-8 lg:p-10 border border-transparent dark:border-border">
             {cars.length === 0 ? (
-              <p className="text-neutral-500 text-sm font-light">
+              <p className="text-neutral-500 dark:text-muted-foreground text-sm font-light">
                 No cars match these filters. Try clearing some filters.
               </p>
             ) : (
@@ -116,7 +116,7 @@ export default async function CarsPage({
                     Previous
                   </PageLink>
                 )}
-                <span className="text-sm text-neutral-500">
+                <span className="text-sm text-neutral-500 dark:text-muted-foreground">
                   Page {page} of {totalPages}
                 </span>
                 {page < totalPages && (
