@@ -28,8 +28,8 @@ export function Hero() {
               car with confidence
             </h1>
             <p className="text-white/70 font-light text-sm md:text-base max-w-md">
-              Inspected inventory, clear pricing, and easy test drives — built
-              for Kenyan buyers.
+              We sell our own inspected stock — clear pricing and easy test
+              drives for Kenyan buyers. Not a marketplace.
             </p>
           </div>
 
@@ -47,7 +47,7 @@ export function Hero() {
               href="/#trade-in"
               className="group flex items-center space-x-3 text-lg font-light text-white hover:text-accent transition-colors justify-between"
             >
-              <span>Sell / trade your car</span>
+              <span>Trade in your car</span>
               <span className="w-8 h-8 rounded-full border border-white/25 flex items-center justify-center group-hover:border-accent transition-colors">
                 <ArrowIcon />
               </span>

@@ -39,8 +39,8 @@ export function Footer() {
             Simcogy Motors
           </p>
           <p className="text-sm text-muted-foreground font-light leading-relaxed max-w-xs mb-6">
-            Verified used cars in Kenya — inspected stock, clear pricing, and
-            direct showroom support.
+            We sell our own inspected used cars in Kenya — clear pricing and
+            direct showroom support. Not a marketplace.
           </p>
           <a
             href={wa}

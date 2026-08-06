@@ -22,9 +22,10 @@ export function About() {
           </h2>
           <div className="flex items-center space-x-6 border-b border-border pb-8 max-w-md">
             <p className="text-muted-foreground font-light text-sm leading-relaxed">
-              Simcogy Motors lists its own inspected stock — not a marketplace.
-              Every car comes with a condition scorecard, transparent specs, and
-              a direct path to enquire, book a test drive, or reserve.
+              Simcogy Motors sells only its own inspected stock — not a
+              marketplace. Third parties cannot list cars here. Every vehicle
+              comes with a condition scorecard, transparent specs, and a direct
+              path to enquire, book a test drive, or reserve.
             </p>
           </div>
           <Link

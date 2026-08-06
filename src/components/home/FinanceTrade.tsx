@@ -78,11 +78,12 @@ function TradeInForm() {
     <div className="bg-card border border-border rounded-4xl p-8 md:p-10">
       <Subheading text="Trade-in" />
       <h2 className="text-3xl md:text-4xl font-medium tracking-tight mb-4">
-        Get a trade-in estimate
+        Trade in toward our stock
       </h2>
       <p className="text-muted-foreground font-light text-sm leading-relaxed mb-6">
-        Tell us about your current car. We’ll review and respond within 24 hours
-        with an estimated value.
+        Have a car to put toward one of ours? Share the details — we&apos;ll
+        estimate a trade-in value within 24 hours. This is not a listing
+        marketplace; we only sell vehicles we own.
       </p>
 
       {status === "ok" ? (

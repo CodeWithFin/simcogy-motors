@@ -3,8 +3,8 @@ import { Subheading } from "@/components/ui/Subheading";
 const steps = [
   {
     n: "01",
-    title: "Browse verified stock",
-    body: "Filter by make, budget, and specs. Every listing shows clear pricing and condition details.",
+    title: "Browse our stock",
+    body: "Filter by make, budget, and specs. Every car we list is from our own inventory — clear pricing and condition details.",
   },
   {
     n: "02",
