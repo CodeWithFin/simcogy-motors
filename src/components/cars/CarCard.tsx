@@ -7,6 +7,7 @@ import {
   formatKes,
   getCarBadges,
 } from "@/lib/format";
+import { cn } from "@/lib/utils";
 import type { Car } from "@/lib/types";
 
 type Props = {
@@ -21,7 +22,7 @@ export function CarCard({ car, className = "" }: Props) {
     "https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?q=80&w=800&auto=format&fit=crop";
   const badges = getCarBadges(car);
   const subtitle = [
-    car.year,
+    String(car.year),
     car.fuel_type,
     `${car.mileage_km.toLocaleString()} km`,
   ]
@@ -31,43 +32,51 @@ export function CarCard({ car, className = "" }: Props) {
   return (
     <Link
       href={`/cars/${car.slug}`}
-      className={`group block min-w-[260px] md:min-w-[280px] w-full md:w-[280px] shrink-0 snap-center ${className}`}
+      className={cn(
+        "group flex flex-col min-w-[260px] md:min-w-[280px] w-full md:w-[280px] shrink-0 snap-center",
+        "rounded-2xl border border-border bg-card text-card-foreground p-3",
+        "shadow-sm hover:shadow-md hover:border-foreground/15 transition-all duration-300",
+        "dark:shadow-none dark:hover:border-border dark:hover:bg-muted/40",
+        className
+      )}
     >
-      <div className="bg-neutral-100 dark:bg-muted rounded-2xl p-4 mb-4 relative transition-all duration-300 group-hover:shadow-lg dark:group-hover:shadow-none dark:group-hover:ring-1 dark:group-hover:ring-border">
+      <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl bg-muted">
+        <Image
+          src={image}
+          alt={title}
+          fill
+          className="object-cover group-hover:scale-105 transition-transform duration-500"
+          sizes="(max-width: 768px) 260px, 280px"
+        />
         {badges[0] && (
           <span
-            className={`absolute top-4 left-4 z-10 inline-flex items-center text-[10px] px-2.5 py-1 rounded-full font-medium ${badgeClass(badges[0].tone)}`}
+            className={cn(
+              "absolute top-3 left-3 z-10 inline-flex items-center text-[10px] px-2.5 py-1 rounded-full font-semibold tracking-wide shadow-sm",
+              badgeClass(badges[0].tone)
+            )}
           >
             {badges[0].label}
           </span>
         )}
-        <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl">
-          <Image
-            src={image}
-            alt={title}
-            fill
-            className="object-cover group-hover:scale-110 transition-transform duration-500"
-            sizes="(max-width: 768px) 260px, 280px"
-          />
-        </div>
       </div>
 
-      <div className="flex justify-between items-end gap-3">
+      <div className="flex flex-col gap-3 pt-4 px-1 pb-1">
         <div className="min-w-0">
-          <h3 className="font-bold text-sm mb-1 text-neutral-900 dark:text-foreground line-clamp-2 leading-snug">
+          <h3 className="font-bold text-sm text-foreground line-clamp-2 leading-snug">
             {title}
           </h3>
-          <p className="text-xs text-neutral-500 dark:text-muted-foreground capitalize line-clamp-1">
+          <p className="mt-1 text-xs text-muted-foreground capitalize line-clamp-1">
             {subtitle}
           </p>
         </div>
-        <div className="flex items-center gap-2 shrink-0">
-          <span className="text-sm font-bold text-neutral-900 dark:text-foreground tabular-nums whitespace-nowrap">
+
+        <div className="flex items-center justify-between gap-3 border-t border-border pt-3">
+          <span className="text-sm font-bold text-foreground tabular-nums">
             {formatKes(car.price)}
           </span>
           <span
             aria-hidden
-            className="w-8 h-8 rounded-lg bg-brand/20 group-hover:bg-brand flex items-center justify-center text-neutral-900 transition-colors"
+            className="w-8 h-8 shrink-0 rounded-lg bg-brand/30 group-hover:bg-brand flex items-center justify-center text-neutral-900 transition-colors"
           >
             <Plus className="w-4 h-4" strokeWidth={2.5} />
           </span>

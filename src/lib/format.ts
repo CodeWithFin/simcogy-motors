@@ -88,6 +88,6 @@ export function badgeClass(tone: CarBadge["tone"]) {
     case "destructive":
       return "bg-destructive text-destructive-foreground";
     default:
-      return "bg-black/55 text-white backdrop-blur-sm";
+      return "bg-neutral-900 text-white dark:bg-white dark:text-neutral-900";
   }
 }
