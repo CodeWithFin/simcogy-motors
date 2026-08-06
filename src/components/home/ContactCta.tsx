@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Subheading } from "@/components/ui/Subheading";
 
 export function ContactCta() {
-  const whatsapp = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "254700000000";
+  const whatsapp = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "254711812043";
   const wa = `https://wa.me/${whatsapp}?text=${encodeURIComponent(
     "Hi Simcogy Motors, I'm interested in your inventory."
   )}`;

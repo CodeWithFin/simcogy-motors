@@ -28,7 +28,7 @@ const columns = [
 ];
 
 export function Footer() {
-  const whatsapp = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "254700000000";
+  const whatsapp = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "254711812043";
   const wa = `https://wa.me/${whatsapp}`;
 
   return (

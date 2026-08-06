@@ -42,7 +42,7 @@ export default async function CarDetailPage({ params }: { params: Params }) {
   if (!car) notFound();
 
   const title = carTitle(car);
-  const whatsapp = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "254700000000";
+  const whatsapp = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "254711812043";
   const waMessage = `Hi Simcogy Motors, I'm interested in the ${title} (${process.env.NEXT_PUBLIC_SITE_URL || ""}/cars/${car.slug})`;
   const cover =
     images[0]?.url ||
