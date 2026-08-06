@@ -1,11 +1,23 @@
 import Link from "next/link";
 import { Subheading } from "@/components/ui/Subheading";
-import { CarCard } from "@/components/cars/CarCard";
+import HoverRevealCards, { type CardItem } from "@/components/ui/cards";
+import { carTitle, formatKes } from "@/lib/format";
 import type { Car } from "@/lib/types";
 
+const FALLBACK_IMAGE =
+  "https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?q=80&w=1200&auto=format&fit=crop";
+
 export function FeaturedCars({ cars }: { cars: Car[] }) {
+  const items: CardItem[] = cars.slice(0, 4).map((car) => ({
+    id: car.id,
+    title: carTitle(car),
+    subtitle: formatKes(car.price),
+    imageUrl: car.cover_url || FALLBACK_IMAGE,
+    href: `/cars/${car.slug}`,
+  }));
+
   return (
-    <section className="py-24 overflow-hidden">
+    <section className="py-24">
       <div className="px-6 md:px-12 max-w-[1440px] mx-auto mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div>
           <Subheading text="Inventory" />
@@ -22,17 +34,15 @@ export function FeaturedCars({ cars }: { cars: Car[] }) {
         </Link>
       </div>
 
-      {cars.length === 0 ? (
+      {items.length === 0 ? (
         <div className="px-6 md:px-12 max-w-[1440px] mx-auto">
           <p className="text-muted-foreground font-light">
             New stock is on the way. Check back soon or contact us for arrivals.
           </p>
         </div>
       ) : (
-        <div className="flex gap-6 overflow-x-auto hide-scrollbar px-6 md:px-12 pb-12 snap-x snap-mandatory">
-          {cars.map((car) => (
-            <CarCard key={car.id} car={car} />
-          ))}
+        <div className="px-6 md:px-12 max-w-[1440px] mx-auto">
+          <HoverRevealCards items={items} />
         </div>
       )}
     </section>
