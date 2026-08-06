@@ -166,6 +166,31 @@ export async function getFeaturedCars(limit = 6): Promise<Car[]> {
   return fallback.cars;
 }
 
+export async function getReducedCars(limit = 4): Promise<Car[]> {
+  return sql<Car[]>`
+    SELECT
+      c.*,
+      (
+        SELECT ci.url FROM car_images ci
+        WHERE ci.car_id = c.id
+        ORDER BY ci.is_cover DESC, ci.position ASC
+        LIMIT 1
+      ) AS cover_url,
+      (
+        SELECT i.overall_score FROM inspections i
+        WHERE i.car_id = c.id
+        ORDER BY i.inspected_at DESC
+        LIMIT 1
+      ) AS overall_score
+    FROM cars c
+    WHERE c.status = 'published'
+      AND c.previous_price IS NOT NULL
+      AND c.previous_price > c.price
+    ORDER BY c.listed_at DESC NULLS LAST, c.created_at DESC
+    LIMIT ${limit}
+  `;
+}
+
 export async function getCarBySlug(slug: string): Promise<Car | null> {
   const rows = await sql<Car[]>`
     SELECT

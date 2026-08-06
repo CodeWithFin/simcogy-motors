@@ -33,23 +33,31 @@ export function Hero() {
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 border-t lg:border-t-0 lg:border-l border-white/15 pt-6 lg:pt-0 lg:pl-12 w-full lg:w-auto">
+          <div className="flex flex-col gap-4 border-t lg:border-t-0 lg:border-l border-white/15 pt-6 lg:pt-0 lg:pl-12 w-full lg:w-auto">
             <Link
               href="/cars"
-              className="group flex items-center space-x-3 text-lg font-light text-white hover:text-accent transition-colors w-full sm:w-auto justify-between"
+              className="group flex items-center space-x-3 text-lg font-light text-white hover:text-accent transition-colors justify-between"
             >
-              <span>Browse inventory</span>
+              <span>Shop used cars</span>
               <span className="w-8 h-8 rounded-full border border-white/25 flex items-center justify-center group-hover:border-accent transition-colors">
                 <ArrowIcon />
               </span>
             </Link>
-            <div className="hidden sm:block w-[1px] h-8 bg-white/15" />
             <Link
-              href="/#contact"
-              className="group flex items-center space-x-3 text-lg font-light text-white hover:text-accent transition-colors w-full sm:w-auto justify-between"
+              href="/#trade-in"
+              className="group flex items-center space-x-3 text-lg font-light text-white hover:text-accent transition-colors justify-between"
             >
-              <span>Get in touch</span>
+              <span>Sell / trade your car</span>
               <span className="w-8 h-8 rounded-full border border-white/25 flex items-center justify-center group-hover:border-accent transition-colors">
+                <ArrowIcon />
+              </span>
+            </Link>
+            <Link
+              href="/#financing"
+              className="group flex items-center space-x-3 text-lg font-light text-white/70 hover:text-accent transition-colors justify-between"
+            >
+              <span>Check financing</span>
+              <span className="w-8 h-8 rounded-full border border-white/15 flex items-center justify-center group-hover:border-accent transition-colors">
                 <ArrowIcon />
               </span>
             </Link>
