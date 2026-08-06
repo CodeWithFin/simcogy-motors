@@ -82,39 +82,53 @@ export default async function CarsPage({
           storefront, not a classifieds board.
         </p>
 
-        <Suspense fallback={<p className="text-muted-foreground text-sm">Loading filters…</p>}>
-          <CarFilters makes={makes} bodyTypes={bodyTypes} total={total} />
-        </Suspense>
+        <div className="flex flex-col lg:flex-row gap-8 lg:gap-10 items-start">
+          <Suspense
+            fallback={
+              <aside className="w-full lg:w-[280px] xl:w-[300px] shrink-0 rounded-2xl border border-border bg-muted/60 p-5">
+                <p className="text-muted-foreground text-sm">Loading filters…</p>
+              </aside>
+            }
+          >
+            <CarFilters makes={makes} bodyTypes={bodyTypes} total={total} />
+          </Suspense>
 
-        {cars.length === 0 ? (
-          <p className="mt-16 text-muted-foreground font-light">
-            No cars match these filters. Try clearing some filters.
-          </p>
-        ) : (
-          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-            {cars.map((car) => (
-              <CarCard key={car.id} car={car} className="!min-w-0 !w-full md:!w-full" />
-            ))}
-          </div>
-        )}
+          <div className="min-w-0 flex-1 w-full">
+            {cars.length === 0 ? (
+              <p className="text-muted-foreground font-light">
+                No cars match these filters. Try clearing some filters.
+              </p>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-6">
+                {cars.map((car) => (
+                  <CarCard
+                    key={car.id}
+                    car={car}
+                    className="!min-w-0 !w-full md:!w-full"
+                  />
+                ))}
+              </div>
+            )}
 
-        {totalPages > 1 && (
-          <div className="mt-12 flex items-center justify-center gap-4">
-            {page > 1 && (
-              <PageLink page={page - 1} params={params}>
-                Previous
-              </PageLink>
-            )}
-            <span className="text-sm text-muted-foreground">
-              Page {page} of {totalPages}
-            </span>
-            {page < totalPages && (
-              <PageLink page={page + 1} params={params}>
-                Next
-              </PageLink>
+            {totalPages > 1 && (
+              <div className="mt-12 flex items-center justify-center gap-4">
+                {page > 1 && (
+                  <PageLink page={page - 1} params={params}>
+                    Previous
+                  </PageLink>
+                )}
+                <span className="text-sm text-muted-foreground">
+                  Page {page} of {totalPages}
+                </span>
+                {page < totalPages && (
+                  <PageLink page={page + 1} params={params}>
+                    Next
+                  </PageLink>
+                )}
+              </div>
             )}
           </div>
-        )}
+        </div>
       </div>
       <Footer />
     </div>
