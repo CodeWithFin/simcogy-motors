@@ -82,12 +82,12 @@ export function getCarBadges(car: Car): CarBadge[] {
 export function badgeClass(tone: CarBadge["tone"]) {
   switch (tone) {
     case "accent":
-      return "bg-accent text-accent-foreground";
+      return "bg-graphite text-paper";
     case "success":
-      return "bg-success text-success-foreground";
+      return "bg-forest text-paper";
     case "destructive":
-      return "bg-destructive text-destructive-foreground";
+      return "bg-canyon text-paper";
     default:
-      return "bg-neutral-900 text-white dark:bg-white dark:text-neutral-900";
+      return "bg-paper text-graphite";
   }
 }

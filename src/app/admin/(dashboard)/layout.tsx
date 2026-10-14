@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { LogoutButton } from "@/components/admin/LogoutButton";
 
 export const dynamic = "force-dynamic";
@@ -27,7 +26,6 @@ export default function DashboardLayout({
           >
             Simcogy Admin
           </Link>
-          <ThemeToggle />
         </div>
         <nav className="flex flex-col gap-3 flex-1">
           {nav.map((item) => (
@@ -59,7 +57,6 @@ export default function DashboardLayout({
           </Link>
         ))}
         <div className="ml-auto shrink-0">
-          <ThemeToggle />
         </div>
       </div>
       <main className="flex-1 p-6 md:p-10 max-w-6xl pt-16 md:pt-10">

@@ -3,56 +3,40 @@
 @tailwind utilities;
 
 /*
-  Simcogy Motors palette
-  - Dark: Rydex-inspired charcoal + chartreuse accent (#D4D414)
-  - Light: warm-neutral paper surfaces; accent darkened slightly (#B5B50A)
-    so CTA text on accent still meets WCAG AA
+  Simcogy Motors — gallery style
+  White concrete canvas, graphite type, one Solar Yellow call to action per screen.
+  Elevation comes from surface shifts (paper → chalk → concrete), not shadows.
 */
 
 @layer base {
   :root {
-    --background: #f4f4ef;
-    --foreground: #141412;
-    --card: #ffffff;
-    --card-foreground: #141412;
-    --border: #e0e0d8;
-    --muted: #ebebe5;
-    --muted-foreground: #5a5a54;
-    --accent: #b5b50a;
-    --accent-foreground: #141412;
-    --destructive: #c62828;
-    --destructive-foreground: #ffffff;
-    --success: #1b7a3d;
-    --success-foreground: #ffffff;
-    --ring: #b5b50a;
-    --glass: rgba(20, 20, 18, 0.04);
-    --glass-border: rgba(20, 20, 18, 0.1);
-    --overlay: rgba(20, 20, 18, 0.08);
-    --hero-fade: rgba(244, 244, 239, 0.92);
-    color-scheme: light;
-  }
+    --color-solar-yellow: #ffac00;
+    --color-canyon-orange: #e84826;
+    --color-forest-green: #629b5c;
+    --color-sky-blue: #77afd8;
+    --color-slate-blue: #9fa1b8;
+    --color-graphite: #151515;
+    --color-pure-black: #000000;
+    --color-concrete: #e5e7eb;
+    --color-ash: #cfd0d0;
+    --color-fog: #b8b8b8;
+    --color-steel: #616161;
+    --color-paper: #ffffff;
+    --color-chalk: #f2f2f2;
+    --color-charcoal: #212121;
 
-  /* html.dark — next-themes sets class on <html>; must beat :root */
-  html.dark {
-    --background: #080805;
-    --foreground: #ffffff;
-    --card: #121212;
-    --card-foreground: #ffffff;
-    --border: #2a2a2a;
-    --muted: #1a1a18;
-    --muted-foreground: #8a8a8a;
-    --accent: #d4d414;
-    --accent-foreground: #080805;
-    --destructive: #f07171;
-    --destructive-foreground: #080805;
-    --success: #4ade80;
-    --success-foreground: #080805;
-    --ring: #d4d414;
-    --glass: rgba(255, 255, 255, 0.05);
-    --glass-border: rgba(255, 255, 255, 0.1);
-    --overlay: rgba(255, 255, 255, 0.1);
-    --hero-fade: rgba(8, 8, 5, 0.9);
-    color-scheme: dark;
+    --background: var(--color-paper);
+    --foreground: var(--color-graphite);
+    --card: var(--color-paper);
+    --card-foreground: var(--color-graphite);
+    --border: var(--color-concrete);
+    --muted: var(--color-chalk);
+    --muted-foreground: var(--color-steel);
+    --destructive: #c4320f;
+    --success: #3d7a37;
+    --ring: var(--color-graphite);
+
+    color-scheme: light;
   }
 
   * {
@@ -64,12 +48,71 @@
   }
 
   body {
-    @apply bg-background text-foreground antialiased min-h-screen;
+    @apply bg-background text-foreground antialiased min-h-screen font-sans text-body;
+    font-feature-settings: "clig" 0, "liga" 0, "ss01" 0;
     -webkit-font-smoothing: antialiased;
   }
 
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-semibold;
+  }
+
   ::selection {
-    @apply bg-accent text-accent-foreground;
+    @apply bg-solar text-graphite;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-graphite);
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  .page-container {
+    @apply mx-auto w-full max-w-page px-6 md:px-10 lg:px-14;
+  }
+
+  .section {
+    @apply py-section;
+  }
+
+  .eyebrow {
+    @apply text-xs font-medium text-steel;
+  }
+
+  .chip {
+    @apply inline-flex items-center rounded-chip bg-concrete px-[14px] py-[6px] text-xs font-medium text-graphite;
+  }
+
+  .monogram {
+    @apply font-display font-medium leading-none text-pure-black;
+    font-feature-settings: "clig", "liga", "ss01";
+    letter-spacing: -0.022em;
+  }
+
+  .field {
+    @apply h-12 w-full rounded-input border border-ash bg-paper px-4 text-sm text-graphite outline-none transition-colors placeholder:text-fog;
+  }
+
+  textarea.field {
+    @apply h-auto py-3;
+  }
+
+  select.field {
+    @apply appearance-none bg-no-repeat pr-10;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23151515' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-position: right 16px center;
+  }
+
+  .field:focus {
+    @apply border-graphite;
+  }
+
+  .legal {
+    @apply bg-concrete text-xs leading-[1.55] text-graphite;
   }
 }
 
@@ -80,28 +123,5 @@
   .hide-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
-  }
-
-  .glass-panel {
-    background: var(--glass);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid var(--glass-border);
-  }
-
-  /* Photo gallery / lightbox stay near-black in both themes —
-     conventional for image viewing; intentional exception to the token system. */
-  .photo-surface {
-    background: #0a0a0a;
-    color: #ffffff;
-  }
-
-  .field {
-    @apply w-full bg-background border border-border rounded-xl px-4 py-3 text-sm font-light text-foreground outline-none transition-colors;
-  }
-
-  .field:focus {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 30%, transparent);
   }
 }

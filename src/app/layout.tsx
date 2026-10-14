@@ -1,18 +1,18 @@
 import type { Metadata } from "next";
-import { Figtree, Oswald } from "next/font/google";
-import { ThemeProvider } from "@/components/theme/ThemeProvider";
+import { Inter, Inter_Tight } from "next/font/google";
 import "./globals.css";
 
-const figtree = Figtree({
+// Substitutes for Rivian's Adventure (UI text) and Liga (monograms).
+const adventure = Inter({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
-  variable: "--font-figtree",
+  weight: ["400", "500", "600"],
+  variable: "--font-adventure",
 });
 
-const oswald = Oswald({
+const liga = Inter_Tight({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
-  variable: "--font-oswald",
+  weight: ["500"],
+  variable: "--font-liga",
 });
 
 export const metadata: Metadata = {
@@ -30,9 +30,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${figtree.variable} ${oswald.variable} font-sans`}>
-        <ThemeProvider>{children}</ThemeProvider>
+    <html lang="en">
+      <body className={`${adventure.variable} ${liga.variable}`}>
+        {children}
       </body>
     </html>
   );
