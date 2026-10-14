@@ -122,13 +122,13 @@ CREATE INDEX idx_cars_status_price ON cars(status, price);
 
 -- =========================================================
 -- CAR IMAGES
--- Stored via ImageKit — this table holds references, not files.
+-- Files live on the server's upload folder — this table holds references, not files.
 -- =========================================================
 CREATE TABLE car_images (
     id              UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     car_id          UUID NOT NULL REFERENCES cars(id) ON DELETE CASCADE,
-    imagekit_file_id VARCHAR(100) NOT NULL,   -- ImageKit's fileId, for deletion/mgmt via API
-    url             TEXT NOT NULL,             -- base ImageKit URL (transforms applied at render time)
+    storage_key     VARCHAR(200) NOT NULL,    -- path inside the upload folder, e.g. cars/<car id>/<file>.jpg
+    url             TEXT NOT NULL,             -- public URL, e.g. /uploads/cars/<car id>/<file>.jpg
     alt_text        VARCHAR(150),
     position        SMALLINT NOT NULL DEFAULT 0, -- ordering, position 0 = cover photo
     is_cover        BOOLEAN NOT NULL DEFAULT FALSE,

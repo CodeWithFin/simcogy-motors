@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { getAdminSession } from "@/lib/auth";
 import sql from "@/lib/db";
+import { deleteStoredFile } from "@/lib/storage";
 
 const carSchema = z.object({
   make: z.string().min(1).max(60),
@@ -109,6 +110,10 @@ export async function DELETE(
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
   const { id } = await params;
+  const images = await sql<{ storage_key: string }[]>`
+    SELECT storage_key FROM car_images WHERE car_id = ${id}
+  `;
   await sql`DELETE FROM cars WHERE id = ${id}`;
+  await Promise.all(images.map((img) => deleteStoredFile(img.storage_key)));
   return NextResponse.json({ ok: true });
 }

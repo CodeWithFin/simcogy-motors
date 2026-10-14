@@ -42,7 +42,7 @@ export type Car = {
 export type CarImage = {
   id: string;
   car_id: string;
-  imagekit_file_id: string;
+  storage_key: string;
   url: string;
   alt_text: string | null;
   position: number;

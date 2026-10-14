@@ -284,11 +284,6 @@ export function CarForm({ car, images = [] }: Props) {
               </div>
             ))}
           </div>
-          {!process.env.NEXT_PUBLIC_IMAGEKIT_READY && localImages.length === 0 && (
-            <p className="text-xs text-muted-foreground">
-              Set IMAGEKIT_URL_ENDPOINT in .env to enable uploads.
-            </p>
-          )}
         </div>
       )}
 

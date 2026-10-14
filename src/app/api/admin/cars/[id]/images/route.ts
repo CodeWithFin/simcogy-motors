@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { getAdminSession } from "@/lib/auth";
 import sql from "@/lib/db";
-import { getImageKit } from "@/lib/imagekit";
+import { deleteStoredFile } from "@/lib/storage";
 
 type Params = Promise<{ id: string }>;
 
@@ -32,18 +32,13 @@ export async function PATCH(
 
   if (action === "delete") {
     const rows = await sql`
-      SELECT imagekit_file_id FROM car_images
+      SELECT storage_key FROM car_images
       WHERE id = ${imageId} AND car_id = ${carId}
       LIMIT 1
     `;
     if (rows[0]) {
-      try {
-        const ik = getImageKit();
-        await ik.deleteFile(rows[0].imagekit_file_id);
-      } catch (err) {
-        console.error("ImageKit delete failed", err);
-      }
       await sql`DELETE FROM car_images WHERE id = ${imageId}`;
+      await deleteStoredFile(rows[0].storage_key);
     }
     return NextResponse.json({ ok: true });
   }

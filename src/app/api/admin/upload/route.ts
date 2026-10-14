@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { getAdminSession } from "@/lib/auth";
 import sql from "@/lib/db";
-import { getImageKit } from "@/lib/imagekit";
+import { deleteStoredFile, saveCarImage } from "@/lib/storage";
 
 export async function POST(req: Request) {
   const session = await getAdminSession();
@@ -23,38 +23,41 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Car not found" }, { status: 404 });
     }
 
-    const buffer = Buffer.from(await file.arrayBuffer());
-    const ik = getImageKit();
-    const result = await ik.upload({
-      file: buffer,
-      fileName: file.name || `car-${carId}.jpg`,
-      folder: `/simcogy-motors/${carId}`,
-    });
+    let stored: Awaited<ReturnType<typeof saveCarImage>>;
+    try {
+      stored = await saveCarImage(carId, file);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Invalid image";
+      return NextResponse.json({ error: message }, { status: 400 });
+    }
 
-    const count = await sql`
-      SELECT COUNT(*)::int AS n FROM car_images WHERE car_id = ${carId}
-    `;
-    const isCover = (count[0]?.n ?? 0) === 0;
-    const position = count[0]?.n ?? 0;
+    try {
+      const count = await sql`
+        SELECT COUNT(*)::int AS n FROM car_images WHERE car_id = ${carId}
+      `;
+      const isCover = (count[0]?.n ?? 0) === 0;
+      const position = count[0]?.n ?? 0;
 
-    const rows = await sql`
-      INSERT INTO car_images (car_id, imagekit_file_id, url, alt_text, position, is_cover)
-      VALUES (
-        ${carId},
-        ${result.fileId},
-        ${result.url},
-        ${file.name},
-        ${position},
-        ${isCover}
-      )
-      RETURNING *
-    `;
+      const rows = await sql`
+        INSERT INTO car_images (car_id, storage_key, url, alt_text, position, is_cover)
+        VALUES (
+          ${carId},
+          ${stored.key},
+          ${stored.url},
+          ${file.name.slice(0, 150)},
+          ${position},
+          ${isCover}
+        )
+        RETURNING *
+      `;
 
-    return NextResponse.json({ image: rows[0] }, { status: 201 });
+      return NextResponse.json({ image: rows[0] }, { status: 201 });
+    } catch (err) {
+      await deleteStoredFile(stored.key);
+      throw err;
+    }
   } catch (err) {
     console.error(err);
-    const message =
-      err instanceof Error ? err.message : "Upload failed";
-    return NextResponse.json({ error: message }, { status: 500 });
+    return NextResponse.json({ error: "Upload failed" }, { status: 500 });
   }
 }
