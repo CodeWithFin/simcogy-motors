@@ -1,9 +1,11 @@
 import { Footer } from "@/components/layout/Footer";
+import { LegalNote } from "@/components/layout/LegalNote";
+import { Navbar } from "@/components/layout/Navbar";
 import { About } from "@/components/home/About";
-import { Benefits } from "@/components/home/Benefits";
 import { ContactCta } from "@/components/home/ContactCta";
 import { FeaturedCars } from "@/components/home/FeaturedCars";
 import { FinanceTrade } from "@/components/home/FinanceTrade";
+import { FindYourCar } from "@/components/home/FindYourCar";
 import { Hero } from "@/components/home/Hero";
 import { HowItWorks } from "@/components/home/HowItWorks";
 import { PriceDrops } from "@/components/home/PriceDrops";
@@ -27,7 +29,7 @@ export default async function HomePage() {
   try {
     const [featured, drops, options] = await Promise.all([
       getFeaturedCars(6),
-      getReducedCars(4),
+      getReducedCars(6),
       getFilterOptions(),
     ]);
     cars = featured;
@@ -38,17 +40,21 @@ export default async function HomePage() {
   }
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
-      <Hero />
-      <QuickSearch makes={makes} />
-      <FeaturedCars cars={cars} />
-      <PriceDrops cars={reduced} />
-      <HowItWorks />
-      <TrustSignals />
-      <FinanceTrade />
-      <About />
-      <Benefits />
-      <ContactCta />
+    <div className="flex min-h-screen flex-col bg-background">
+      <Navbar />
+      <main>
+        <Hero />
+        <FindYourCar cars={cars} />
+        <QuickSearch makes={makes} />
+        <FeaturedCars cars={cars} />
+        <PriceDrops cars={reduced} />
+        <HowItWorks />
+        <TrustSignals />
+        <FinanceTrade />
+        <About />
+        <ContactCta />
+        <LegalNote />
+      </main>
       <Footer />
     </div>
   );

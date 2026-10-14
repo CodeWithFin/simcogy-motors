@@ -1,4 +1,12 @@
-import { Subheading } from "@/components/ui/Subheading";
+import Image from "next/image";
+import { ButtonLink } from "@/components/ui/Button";
+import { photos } from "@/lib/photos";
+
+const points = [
+  { value: "100%", label: "In-house inspected stock" },
+  { value: "48h", label: "Reservation hold window" },
+  { value: "6", label: "Areas rated on every scorecard" },
+];
 
 const reviews = [
   {
@@ -20,89 +28,65 @@ const reviews = [
 
 export function TrustSignals() {
   return (
-    <section className="py-24 px-6 md:px-12 max-w-[1440px] mx-auto">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 mb-20">
-        <div>
-          <Subheading text="Trust" />
-          <h2 className="text-3xl md:text-5xl font-medium tracking-tight leading-tight mb-6">
-            Inspected in-house. Verified by us.
-          </h2>
-          <p className="text-muted-foreground font-light text-sm leading-relaxed max-w-md mb-8">
-            Kenya doesn’t have a CARFAX equivalent that works for most imports.
-            We replace that with our own scorecard — engine, body, tires,
-            electronics, interior, and brakes — published on the listing.
-          </p>
-          <ul className="space-y-3 text-sm font-light">
-            <li className="flex items-start gap-3">
-              <span className="text-accent mt-0.5">◆</span>
-              <span>Condition score shown on every inspected car</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-accent mt-0.5">◆</span>
-              <span>48-hour reservation hold with deposit</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-accent mt-0.5">◆</span>
-              <span>Single-dealer stock — we own what we sell</span>
-            </li>
-          </ul>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 content-start">
-          <div className="bg-card border border-border rounded-4xl p-6 sm:col-span-2">
-            <p className="text-xs text-muted-foreground font-light mb-2 uppercase tracking-wider">
-              Guarantee
+    <>
+      <section className="relative overflow-hidden bg-charcoal">
+        <Image
+          src={photos.garage}
+          alt="Car under lights in a workshop"
+          fill
+          className="object-cover opacity-70"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-black/10" />
+        <div className="page-container relative flex min-h-[640px] flex-col justify-end py-section md:min-h-[760px]">
+          <div className="max-w-2xl">
+            <h2 className="mb-6 text-heading-lg text-paper md:text-display">
+              Inspected in-house. Verified by us.
+            </h2>
+            <p className="mb-10 max-w-xl text-body-lg text-paper/85">
+              Kenya doesn&apos;t have a CARFAX equivalent that works for most
+              imports. We replace it with our own scorecard — engine, body,
+              tyres, electronics, interior, and brakes — published on every
+              listing. If the condition doesn&apos;t match at viewing, we make it
+              right before you commit.
             </p>
-            <p className="text-xl font-medium tracking-tight mb-2">
-              Transparent condition, or we talk
-            </p>
-            <p className="text-sm text-muted-foreground font-light leading-relaxed">
-              If the car’s disclosed condition doesn’t match the scorecard at
-              viewing, we’ll make it right before you commit.
-            </p>
+            <ButtonLink href="/cars" variant="ghost-light" size="lg">
+              See inspected cars
+            </ButtonLink>
           </div>
-          <div className="bg-muted/60 border border-border rounded-4xl p-6">
-            <p className="text-3xl font-light tracking-tighter text-accent mb-1">
-              100%
-            </p>
-            <p className="text-sm text-muted-foreground font-light">
-              In-house inspected stock
-            </p>
-          </div>
-          <div className="bg-muted/60 border border-border rounded-4xl p-6">
-            <p className="text-3xl font-light tracking-tighter text-accent mb-1">
-              48h
-            </p>
-            <p className="text-sm text-muted-foreground font-light">
-              Reservation hold window
-            </p>
-          </div>
-        </div>
-      </div>
 
-      <div>
-        <Subheading text="Reviews" />
-        <h2 className="text-3xl md:text-4xl font-medium tracking-tight mb-10">
-          What buyers say
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {reviews.map((r) => (
-            <blockquote
-              key={r.name}
-              className="border-t border-border pt-6"
-            >
-              <p className="text-sm font-light text-foreground/90 leading-relaxed mb-6">
-                “{r.text}”
-              </p>
-              <footer>
-                <p className="text-sm font-medium">{r.name}</p>
-                <p className="text-xs text-muted-foreground font-light mt-0.5">
-                  {r.loc}
-                </p>
-              </footer>
-            </blockquote>
-          ))}
+          <dl className="mt-16 grid grid-cols-1 gap-8 border-t border-paper/25 pt-10 sm:grid-cols-3">
+            {points.map((p) => (
+              <div key={p.label}>
+                <dt className="sr-only">{p.label}</dt>
+                <dd className="text-heading-lg text-paper">{p.value}</dd>
+                <dd className="mt-1 text-body text-paper/75">{p.label}</dd>
+              </div>
+            ))}
+          </dl>
         </div>
-      </div>
-    </section>
+      </section>
+
+      <section className="section bg-paper">
+        <div className="page-container">
+          <h2 className="mb-12 text-heading-lg md:text-heading-xl">
+            What buyers say
+          </h2>
+          <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
+            {reviews.map((r) => (
+              <blockquote key={r.name} className="border-t border-graphite pt-8">
+                <p className="mb-8 text-subheading font-medium text-graphite">
+                  &ldquo;{r.text}&rdquo;
+                </p>
+                <footer>
+                  <p className="text-body font-semibold">{r.name}</p>
+                  <p className="text-body text-steel">{r.loc}</p>
+                </footer>
+              </blockquote>
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
   );
 }

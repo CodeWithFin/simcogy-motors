@@ -1,62 +1,61 @@
-import Link from "next/link";
-import { Subheading } from "@/components/ui/Subheading";
+import { ButtonLink } from "@/components/ui/Button";
 
 const stats = [
-  { number: "100", suffix: "%", label: "In-house inspected" },
-  { number: "48", suffix: "h", label: "Reservation hold" },
-  { number: "1", suffix: "", label: "Trusted dealer" },
-  { number: "KE", suffix: "", label: "Kenya-focused stock" },
+  { value: "100%", label: "In-house inspected" },
+  { value: "48h", label: "Reservation hold" },
+  { value: "1", label: "Dealer — no third parties" },
+  { value: "KE", label: "Kenya-focused stock" },
+];
+
+const features = [
+  {
+    title: "Inspection scorecard",
+    body: "Engine, body, tyres, electronics, interior, and brakes — rated and shown on every listing.",
+  },
+  {
+    title: "Financing clarity",
+    body: "Estimate monthly payments on the listing page before you visit the showroom.",
+  },
+  {
+    title: "WhatsApp-first support",
+    body: "Enquire or book a test drive in under two minutes from your phone.",
+  },
 ];
 
 export function About() {
   return (
-    <section
-      id="about"
-      className="py-24 md:py-32 px-6 md:px-12 max-w-[1440px] mx-auto"
-    >
-      <div className="flex flex-col lg:flex-row justify-between gap-16 lg:gap-24">
-        <div className="lg:w-1/2">
-          <Subheading text="About us" />
-          <h2 className="text-3xl md:text-5xl font-medium tracking-tight leading-tight mb-8 max-w-2xl text-foreground">
-            Verified cars, clear pricing, and less back-and-forth.
+    <section id="about" className="section scroll-mt-20 bg-paper">
+      <div className="page-container">
+        <div className="mx-auto mb-section max-w-4xl text-center">
+          <h2 className="mb-6 text-heading-lg md:text-display">
+            Verified cars, clear pricing, less back-and-forth
           </h2>
-          <div className="flex items-center space-x-6 border-b border-border pb-8 max-w-md">
-            <p className="text-muted-foreground font-light text-sm leading-relaxed">
-              Simcogy Motors sells only its own inspected stock — not a
-              marketplace. Third parties cannot list cars here. Every vehicle
-              comes with a condition scorecard, transparent specs, and a direct
-              path to enquire, book a test drive, or reserve.
-            </p>
-          </div>
-          <Link
-            href="/cars"
-            className="inline-flex items-center space-x-4 mt-8 group"
-          >
-            <span className="text-lg font-light group-hover:text-accent transition-colors">
-              Browse inventory
-            </span>
-            <span className="w-10 h-10 rounded-xl bg-accent flex items-center justify-center text-accent-foreground group-hover:scale-105 transition-transform">
-              →
-            </span>
-          </Link>
+          <p className="mx-auto mb-10 max-w-2xl text-body-lg text-steel">
+            Simcogy Motors sells only its own inspected stock — not a
+            marketplace. Third parties cannot list cars here. Every vehicle
+            comes with a condition scorecard, transparent specs, and a direct
+            path to enquire, book a test drive, or reserve.
+          </p>
+          <ButtonLink href="/cars" variant="graphite" size="lg">
+            Browse inventory
+          </ButtonLink>
         </div>
 
-        <div className="lg:w-1/2 grid grid-cols-2 gap-y-12 gap-x-8">
+        <dl className="grid grid-cols-2 gap-px border-y border-concrete bg-concrete md:grid-cols-4">
           {stats.map((stat) => (
-            <div key={stat.label} className="flex flex-col">
-              <div className="flex items-end mb-2">
-                <span className="text-5xl md:text-6xl font-light tracking-tighter text-foreground">
-                  {stat.number}
-                </span>
-                {stat.suffix && (
-                  <span className="text-accent text-4xl md:text-5xl font-light tracking-tighter mb-1 ml-1">
-                    {stat.suffix}
-                  </span>
-                )}
-              </div>
-              <span className="text-muted-foreground font-light text-sm">
-                {stat.label}
-              </span>
+            <div key={stat.label} className="bg-paper px-4 py-10 text-center">
+              <dt className="sr-only">{stat.label}</dt>
+              <dd className="text-heading-xl md:text-display">{stat.value}</dd>
+              <dd className="mt-2 text-body text-steel">{stat.label}</dd>
+            </div>
+          ))}
+        </dl>
+
+        <div className="mt-section grid grid-cols-1 gap-10 md:grid-cols-3">
+          {features.map((feature) => (
+            <div key={feature.title}>
+              <h3 className="mb-3 text-subheading">{feature.title}</h3>
+              <p className="text-body-lg text-steel">{feature.body}</p>
             </div>
           ))}
         </div>

@@ -1,35 +1,34 @@
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 import { CarCard } from "@/components/cars/CarCard";
+import { ButtonLink } from "@/components/ui/Button";
 import type { Car } from "@/lib/types";
 
 export function PriceDrops({ cars }: { cars: Car[] }) {
   if (cars.length === 0) return null;
 
   return (
-    <section className="px-4 md:px-8 max-w-[1600px] mx-auto mb-24">
-      <div className="bg-white dark:bg-card text-black dark:text-card-foreground rounded-[2.5rem] p-8 md:p-12 lg:p-16 relative overflow-hidden border border-transparent dark:border-border">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+    <section className="section bg-chalk">
+      <div className="page-container">
+        <div className="mb-12 flex flex-col justify-between gap-6 md:flex-row md:items-end">
           <div>
-            <h2 className="font-display text-4xl md:text-5xl font-bold uppercase tracking-tight mb-2">
+            <h2 className="mb-3 text-heading-lg md:text-heading-xl">
               Just reduced
             </h2>
-            <p className="text-xs text-neutral-500 dark:text-muted-foreground max-w-xs">
+            <p className="max-w-md text-body-lg text-steel">
               Price drops on inspected Simcogy Motors stock — same cars, better
               value.
             </p>
           </div>
-          <Link
-            href="/cars"
-            className="px-6 py-3 rounded-full bg-brand/20 hover:bg-brand text-black font-semibold text-xs uppercase tracking-wide transition-all duration-300 flex items-center gap-2"
-          >
-            All products
-            <ArrowRight className="w-4 h-4" />
-          </Link>
+          <ButtonLink href="/cars?sort=price_asc" variant="ghost-dark">
+            Shop by price
+          </ButtonLink>
         </div>
-        <div className="flex gap-8 overflow-x-auto hide-scrollbar pb-2 snap-x snap-mandatory">
+        <div className="hide-scrollbar -mx-6 flex snap-x snap-mandatory gap-6 overflow-x-auto px-6 pb-2 md:-mx-10 md:px-10 lg:-mx-14 lg:px-14">
           {cars.map((car) => (
-            <CarCard key={car.id} car={car} />
+            <CarCard
+              key={car.id}
+              car={car}
+              className="w-[300px] shrink-0 snap-start md:w-[380px]"
+            />
           ))}
         </div>
       </div>

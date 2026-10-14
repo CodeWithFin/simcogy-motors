@@ -1,34 +1,39 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
-import { Subheading } from "@/components/ui/Subheading";
+import { ButtonLink, buttonClass } from "@/components/ui/Button";
 
 export function FinanceTrade() {
   return (
-    <section
-      id="financing"
-      className="py-24 px-6 md:px-12 max-w-[1440px] mx-auto scroll-mt-8"
-    >
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
-        <div className="bg-card border border-border rounded-4xl p-8 md:p-10 flex flex-col">
-          <Subheading text="Financing" />
-          <h2 className="text-3xl md:text-4xl font-medium tracking-tight mb-4">
+    <section id="financing" className="section scroll-mt-20 bg-chalk">
+      <div className="page-container grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <div className="flex flex-col rounded-card bg-paper p-8 md:p-12">
+          <h2 className="mb-4 text-heading-md md:text-heading-lg">
             Estimate monthly payments
           </h2>
-          <p className="text-muted-foreground font-light text-sm leading-relaxed mb-8 flex-1">
-            Every listing has a financing calculator — adjust down payment, term,
-            and rate to see an indicative monthly figure before you visit.
+          <p className="mb-10 flex-1 text-body-lg text-steel">
+            Every listing has a financing calculator — adjust down payment,
+            term, and rate to see an indicative monthly figure before you visit.
           </p>
-          <Link
-            href="/cars"
-            className="inline-flex self-start items-center justify-center px-8 py-3 rounded-full bg-accent text-accent-foreground font-medium hover:scale-[1.02] transition-transform"
-          >
+          <dl className="mb-10 grid grid-cols-3 gap-4 border-t border-concrete pt-8">
+            {[
+              ["30%", "Example deposit"],
+              ["36 mo", "Example term"],
+              ["14%", "Example rate"],
+            ].map(([value, label]) => (
+              <div key={label}>
+                <dt className="sr-only">{label}</dt>
+                <dd className="text-heading-sm">{value}</dd>
+                <dd className="mt-1 text-xs text-steel">{label}</dd>
+              </div>
+            ))}
+          </dl>
+          <ButtonLink href="/cars" variant="graphite" className="self-start">
             Browse cars with calculator
-          </Link>
+          </ButtonLink>
         </div>
 
-        <div id="trade-in" className="scroll-mt-8">
+        <div id="trade-in" className="scroll-mt-20">
           <TradeInForm />
         </div>
       </div>
@@ -75,27 +80,26 @@ function TradeInForm() {
   }
 
   return (
-    <div className="bg-card border border-border rounded-4xl p-8 md:p-10">
-      <Subheading text="Trade-in" />
-      <h2 className="text-3xl md:text-4xl font-medium tracking-tight mb-4">
+    <div className="h-full rounded-card bg-paper p-8 md:p-12">
+      <h2 className="mb-4 text-heading-md md:text-heading-lg">
         Trade in toward our stock
       </h2>
-      <p className="text-muted-foreground font-light text-sm leading-relaxed mb-6">
+      <p className="mb-8 text-body-lg text-steel">
         Have a car to put toward one of ours? Share the details — we&apos;ll
-        estimate a trade-in value within 24 hours. This is not a listing
-        marketplace; we only sell vehicles we own.
+        estimate a trade-in value within 24 hours.
       </p>
 
       {status === "ok" ? (
-        <p className="text-success text-sm font-light">
-          Request received. We’ll get back to you on {phone} within 24 hours.
+        <p className="rounded-card bg-chalk p-6 text-body-lg font-medium text-graphite">
+          Request received. We&apos;ll get back to you on {phone} within 24 hours.
         </p>
       ) : (
-        <form onSubmit={onSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <form onSubmit={onSubmit} className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <input
             required
             className="field"
             placeholder="Make"
+            aria-label="Make"
             value={make}
             onChange={(e) => setMake(e.target.value)}
           />
@@ -103,6 +107,7 @@ function TradeInForm() {
             required
             className="field"
             placeholder="Model"
+            aria-label="Model"
             value={model}
             onChange={(e) => setModel(e.target.value)}
           />
@@ -111,6 +116,7 @@ function TradeInForm() {
             type="number"
             className="field"
             placeholder="Year"
+            aria-label="Year"
             value={year}
             onChange={(e) => setYear(e.target.value)}
           />
@@ -119,30 +125,34 @@ function TradeInForm() {
             type="number"
             className="field"
             placeholder="Mileage (km)"
+            aria-label="Mileage in kilometres"
             value={mileage}
             onChange={(e) => setMileage(e.target.value)}
           />
           <input
             required
+            type="tel"
             className="field sm:col-span-2"
             placeholder="Phone / WhatsApp"
+            aria-label="Phone or WhatsApp number"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
           />
           <textarea
-            className="field sm:col-span-2 resize-none"
+            className="field resize-none sm:col-span-2"
             rows={3}
             placeholder="Condition notes (optional)"
+            aria-label="Condition notes"
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
           />
           {error && (
-            <p className="sm:col-span-2 text-sm text-destructive">{error}</p>
+            <p className="text-body text-destructive sm:col-span-2">{error}</p>
           )}
           <button
             type="submit"
             disabled={status === "loading"}
-            className="sm:col-span-2 py-3 rounded-full border border-border font-light hover:border-accent transition-colors disabled:opacity-60"
+            className={buttonClass("graphite", "md", "sm:col-span-2")}
           >
             {status === "loading" ? "Sending…" : "Request estimate"}
           </button>
