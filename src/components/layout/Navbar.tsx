@@ -1,153 +1,95 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
-import { ThemeToggle } from "@/components/theme/ThemeToggle";
+import { useEffect, useState } from "react";
+import { Menu, X } from "lucide-react";
+import { buttonClass } from "@/components/ui/Button";
+import { viewingLink } from "@/lib/contact";
 import { cn } from "@/lib/utils";
 
 const links = [
   { href: "/cars", label: "Inventory" },
   { href: "/#financing", label: "Financing" },
   { href: "/#trade-in", label: "Trade-in" },
+  { href: "/#about", label: "About" },
   { href: "/#contact", label: "Contact" },
 ];
 
-type Props = {
-  /** Force light text/glass for use over dark photo heroes */
-  overlay?: boolean;
-};
-
-export function Navbar({ overlay = false }: Props) {
+export function Navbar() {
   const [open, setOpen] = useState(false);
 
+  useEffect(() => {
+    const close = () => setOpen(false);
+    window.addEventListener("resize", close);
+    return () => window.removeEventListener("resize", close);
+  }, []);
+
   return (
-    <nav className="absolute top-4 inset-x-0 z-50 flex items-center justify-between px-4 md:px-8 w-full max-w-[1440px] mx-auto">
-      <Link
-        href="/"
-        className={cn(
-          "tracking-tighter font-medium text-lg uppercase",
-          overlay ? "text-white" : "text-foreground"
-        )}
-      >
-        Simcogy Motors
-      </Link>
-
-      <div
-        className={cn(
-          "hidden md:flex px-6 py-2.5 items-center space-x-6 rounded-full",
-          overlay
-            ? "bg-black/35 backdrop-blur-md border border-white/15"
-            : "bg-foreground text-background"
-        )}
-      >
-        {links.map((item) => (
-          <Link
-            key={item.href}
-            href={item.href}
-            className={cn(
-              "text-sm font-light transition-colors",
-              overlay
-                ? "text-white/80 hover:text-white"
-                : "text-background/80 hover:text-background"
-            )}
-          >
-            {item.label}
-          </Link>
-        ))}
-        <div
-          className={overlay ? "text-white/25" : "text-background/25"}
-          aria-hidden
-        >
-          |
-        </div>
+    <div className="fixed inset-x-0 top-0 z-50 p-3">
+      <header className="relative mx-auto flex h-14 max-w-page items-center justify-between rounded-nav border border-ash/50 bg-paper px-4 shadow-nav md:px-6">
         <Link
-          href="/cars"
-          className={
-            overlay
-              ? "text-white/60 hover:text-white"
-              : "text-background/60 hover:text-background"
-          }
-          aria-label="Search cars"
+          href="/"
+          className="text-[15px] font-medium uppercase tracking-[0.32em] text-graphite"
+          onClick={() => setOpen(false)}
         >
-          <SearchIcon />
+          Simcogy
         </Link>
-        <ThemeToggle
-          className={
-            overlay
-              ? "text-white/70 hover:text-white hover:bg-white/10 ring-offset-transparent"
-              : "text-background/70 hover:text-background hover:bg-background/10 ring-offset-transparent"
-          }
-        />
-      </div>
 
-      <div className="flex items-center gap-2 md:hidden">
-        <ThemeToggle
-          className={
-            overlay
-              ? "text-white/70 hover:text-white hover:bg-white/10"
-              : undefined
-          }
-        />
-        <button
-          type="button"
-          className={cn(
-            "w-10 h-10 flex flex-col justify-center items-center space-y-1 rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
-            overlay
-              ? "bg-black/35 backdrop-blur-md border border-white/15"
-              : "bg-foreground"
-          )}
-          onClick={() => setOpen((v) => !v)}
-          aria-label="Menu"
+        <nav
+          aria-label="Main"
+          className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-1 lg:flex"
         >
-          <div
-            className={cn(
-              "w-4 h-[1px] rounded-full",
-              overlay ? "bg-white" : "bg-background"
-            )}
-          />
-          <div
-            className={cn(
-              "w-4 h-[1px] rounded-full",
-              overlay ? "bg-white" : "bg-background"
-            )}
-          />
-          <div
-            className={cn(
-              "w-4 h-[1px] rounded-full",
-              overlay ? "bg-white" : "bg-background"
-            )}
-          />
-        </button>
-      </div>
-
-      {open && (
-        <div className="absolute top-14 right-4 left-4 glass-panel rounded-2xl p-6 flex flex-col gap-4 md:hidden bg-card/95">
           {links.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className="text-sm font-light text-foreground"
+              className="rounded-full px-3 py-2 text-sm font-semibold text-graphite transition-colors hover:bg-chalk"
+            >
+              {item.label}
+            </Link>
+          ))}
+        </nav>
+
+        <div className="flex items-center gap-2">
+          <a
+            href={viewingLink()}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={buttonClass("solar", "sm")}
+          >
+            Book a viewing
+          </a>
+          <button
+            type="button"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-full text-graphite transition-colors hover:bg-chalk lg:hidden"
+            onClick={() => setOpen((v) => !v)}
+            aria-label={open ? "Close menu" : "Open menu"}
+            aria-expanded={open}
+          >
+            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </div>
+      </header>
+
+      <div
+        className={cn(
+          "mx-auto mt-2 max-w-page overflow-hidden rounded-nav border border-ash/50 bg-paper shadow-float transition-all lg:hidden",
+          open ? "visible opacity-100" : "invisible h-0 border-0 opacity-0"
+        )}
+      >
+        <nav aria-label="Mobile" className="flex flex-col p-3">
+          {links.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="rounded-icon px-3 py-3 text-body-lg font-medium text-graphite hover:bg-chalk"
               onClick={() => setOpen(false)}
             >
               {item.label}
             </Link>
           ))}
-        </div>
-      )}
-    </nav>
-  );
-}
-
-function SearchIcon() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
-      <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="1.5" />
-      <path
-        d="M20 20l-3-3"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-      />
-    </svg>
+        </nav>
+      </div>
+    </div>
   );
 }

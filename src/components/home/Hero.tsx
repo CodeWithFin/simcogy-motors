@@ -17,7 +17,7 @@ export function Hero() {
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-black/80" />
 
-        <Navbar overlay />
+        <Navbar />
 
         <div className="absolute bottom-0 inset-x-0 p-6 md:p-12 z-20 flex flex-col lg:flex-row justify-between lg:items-end gap-8">
           <div className="max-w-2xl">

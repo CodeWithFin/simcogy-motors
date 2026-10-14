@@ -99,7 +99,7 @@ export default async function CarDetailPage({ params }: { params: Params }) {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <div className="relative">
-        <Navbar overlay />
+        <Navbar />
         <div className="pt-20 px-2 md:px-4">
           <div className="relative w-full h-[50vh] md:h-[70vh] rounded-4xl overflow-hidden photo-surface ring-1 ring-border dark:ring-0">
             <Image
