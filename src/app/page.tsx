@@ -16,7 +16,8 @@ import {
 } from "@/lib/cars";
 import type { Car } from "@/lib/types";
 
-export const revalidate = 60;
+// Rendered per request: the Docker build has no database, and admin changes should show immediately.
+export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
   let cars: Car[] = [];

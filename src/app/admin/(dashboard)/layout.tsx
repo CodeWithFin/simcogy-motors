@@ -2,6 +2,8 @@ import Link from "next/link";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { LogoutButton } from "@/components/admin/LogoutButton";
 
+export const dynamic = "force-dynamic";
+
 const nav = [
   { href: "/admin", label: "Overview" },
   { href: "/admin/cars", label: "Cars" },
