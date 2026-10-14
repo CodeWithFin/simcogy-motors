@@ -1,7 +1,8 @@
 import { Suspense } from "react";
-import Link from "next/link";
 import { Footer } from "@/components/layout/Footer";
+import { LegalNote } from "@/components/layout/LegalNote";
 import { Navbar } from "@/components/layout/Navbar";
+import { ButtonLink } from "@/components/ui/Button";
 import { CarCard } from "@/components/cars/CarCard";
 import { CarFilters } from "@/components/cars/CarFilters";
 import { getFilterOptions, getPublishedCars } from "@/lib/cars";
@@ -63,60 +64,57 @@ export default async function CarsPage({
   const totalPages = Math.max(1, Math.ceil(total / limit));
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
-      <div className="relative pt-24 pb-16 px-4 md:px-8 max-w-[1600px] mx-auto w-full">
-        <div className="fixed top-0 inset-x-0 z-50 pointer-events-none">
-          <div className="pointer-events-auto relative h-16">
-            <Navbar />
-          </div>
-        </div>
-
-        <div className="mb-10 md:mb-12">
-          <h1 className="font-display text-4xl md:text-6xl font-bold uppercase tracking-tight mb-3">
-            Our stock
-          </h1>
-          <p className="text-muted-foreground text-xs md:text-sm max-w-md">
+    <div className="flex min-h-screen flex-col bg-background">
+      <Navbar />
+      <main className="page-container flex-1 pb-section pt-32 md:pt-40">
+        <div className="mb-12 md:mb-16">
+          <h1 className="mb-4 text-heading-xl md:text-display">Our stock</h1>
+          <p className="max-w-lg text-body-lg text-steel">
             Every vehicle is from Simcogy Motors retail inventory — inspected,
             priced clearly, and ready to reserve.
           </p>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-10 items-start">
+        <div className="flex flex-col items-start gap-8 lg:flex-row lg:gap-14">
           <Suspense
             fallback={
-              <aside className="w-full lg:w-[280px] xl:w-[300px] shrink-0 rounded-2xl border border-border bg-muted/60 p-5">
-                <p className="text-muted-foreground text-sm">Loading filters…</p>
+              <aside className="w-full shrink-0 lg:w-[280px]">
+                <p className="text-body text-steel">Loading filters…</p>
               </aside>
             }
           >
             <CarFilters makes={makes} bodyTypes={bodyTypes} total={total} />
           </Suspense>
 
-          <div className="min-w-0 flex-1 w-full bg-white dark:bg-card text-black dark:text-card-foreground rounded-[2.5rem] p-6 md:p-8 lg:p-10 border border-transparent dark:border-border">
+          <div className="w-full min-w-0 flex-1">
             {cars.length === 0 ? (
-              <p className="text-neutral-500 dark:text-muted-foreground text-sm font-light">
-                No cars match these filters. Try clearing some filters.
-              </p>
+              <div className="rounded-card bg-chalk p-10 text-center">
+                <p className="mb-6 text-body-lg text-steel">
+                  No cars match these filters. Try clearing some filters.
+                </p>
+                <ButtonLink href="/cars" variant="ghost-dark">
+                  Clear filters
+                </ButtonLink>
+              </div>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8">
+              <div className="grid grid-cols-1 gap-x-6 gap-y-14 sm:grid-cols-2 xl:grid-cols-3">
                 {cars.map((car) => (
-                  <CarCard
-                    key={car.id}
-                    car={car}
-                    className="!min-w-0 !w-full md:!w-full"
-                  />
+                  <CarCard key={car.id} car={car} />
                 ))}
               </div>
             )}
 
             {totalPages > 1 && (
-              <div className="mt-12 flex items-center justify-center gap-4">
+              <nav
+                aria-label="Pagination"
+                className="mt-section flex items-center justify-center gap-4"
+              >
                 {page > 1 && (
                   <PageLink page={page - 1} params={params}>
                     Previous
                   </PageLink>
                 )}
-                <span className="text-sm text-neutral-500 dark:text-muted-foreground">
+                <span className="text-body text-steel">
                   Page {page} of {totalPages}
                 </span>
                 {page < totalPages && (
@@ -124,11 +122,12 @@ export default async function CarsPage({
                     Next
                   </PageLink>
                 )}
-              </div>
+              </nav>
             )}
           </div>
         </div>
-      </div>
+      </main>
+      <LegalNote />
       <Footer />
     </div>
   );
@@ -150,11 +149,8 @@ function PageLink({
   });
   qs.set("page", String(page));
   return (
-    <Link
-      href={`/cars?${qs.toString()}`}
-      className="text-sm font-medium hover:text-brand transition-colors"
-    >
+    <ButtonLink href={`/cars?${qs.toString()}`} variant="ghost-dark">
       {children}
-    </Link>
+    </ButtonLink>
   );
 }

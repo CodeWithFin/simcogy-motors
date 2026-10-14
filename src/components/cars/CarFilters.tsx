@@ -2,6 +2,7 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useState, useTransition } from "react";
+import { buttonClass } from "@/components/ui/Button";
 
 type Props = {
   makes: string[];
@@ -189,28 +190,28 @@ export function CarFilters({ makes, bodyTypes, total }: Props) {
     </div>
   );
 
+  const count = pending ? "Updating…" : `${total} car${total === 1 ? "" : "s"}`;
+
   return (
-    <aside className="w-full lg:w-[280px] xl:w-[300px] shrink-0">
-      {/* Mobile toggle */}
-      <div className="lg:hidden mb-4">
+    <aside className="w-full shrink-0 lg:w-[280px]">
+      <div className="lg:hidden">
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
-          className="flex w-full items-center justify-between gap-3 rounded-2xl border border-border bg-muted/60 px-4 py-3 text-sm font-medium"
+          aria-expanded={open}
+          className={buttonClass("light", "md", "w-full justify-between")}
         >
           <span>Filters</span>
-          <span className="text-muted-foreground font-light">
-            {pending ? "Updating…" : `${total} car${total === 1 ? "" : "s"}`}
-          </span>
+          <span className="font-normal text-steel">{count}</span>
         </button>
         {open && (
-          <div className="mt-3 rounded-2xl border border-border bg-muted/60 p-4">
-            <div className="mb-4 flex items-center justify-between">
-              <p className="text-sm font-medium">Refine stock</p>
+          <div className="mt-3 rounded-card bg-chalk p-5">
+            <div className="mb-5 flex items-center justify-between">
+              <p className="text-body font-semibold">Refine stock</p>
               <button
                 type="button"
                 onClick={clear}
-                className="text-xs text-muted-foreground hover:text-accent transition-colors"
+                className="text-xs font-medium text-steel underline underline-offset-4 hover:text-graphite"
               >
                 Clear all
               </button>
@@ -220,21 +221,18 @@ export function CarFilters({ makes, bodyTypes, total }: Props) {
         )}
       </div>
 
-      {/* Desktop sidebar */}
-      <div className="hidden lg:block sticky top-24 max-h-[calc(100vh-7rem)] overflow-y-auto rounded-2xl border border-border bg-muted/60 p-5">
-        <div className="mb-5 flex items-center justify-between gap-2">
+      <div className="sticky top-24 hidden max-h-[calc(100vh-7rem)] overflow-y-auto pb-6 pr-1 lg:block">
+        <div className="mb-6 flex items-end justify-between gap-2 border-b border-concrete pb-4">
           <div>
-            <p className="text-sm font-medium tracking-tight">Filters</p>
-            <p className="text-xs text-muted-foreground font-light mt-0.5">
-              {pending ? "Updating…" : `${total} car${total === 1 ? "" : "s"}`}
-            </p>
+            <p className="text-subheading font-semibold">Filters</p>
+            <p className="mt-0.5 text-xs text-steel">{count}</p>
           </div>
           <button
             type="button"
             onClick={clear}
-            className="text-xs text-muted-foreground hover:text-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
+            className="text-xs font-medium text-steel underline underline-offset-4 hover:text-graphite"
           >
-            Clear
+            Clear all
           </button>
         </div>
         {fields}
@@ -251,8 +249,8 @@ function Field({
   children: React.ReactNode;
 }) {
   return (
-    <label className="flex flex-col gap-1.5">
-      <span className="text-xs text-muted-foreground font-light">{label}</span>
+    <label className="flex flex-col gap-2">
+      <span className="eyebrow">{label}</span>
       {children}
     </label>
   );
