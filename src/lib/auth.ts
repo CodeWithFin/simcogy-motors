@@ -20,7 +20,10 @@ export async function createAdminSession() {
   const jar = await cookies();
   jar.set(COOKIE, token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    // Browsers drop secure cookies on plain http, which would break login before HTTPS is set up.
+    secure:
+      process.env.NODE_ENV === "production" &&
+      (process.env.NEXT_PUBLIC_SITE_URL ?? "").startsWith("https://"),
     sameSite: "lax",
     path: "/",
     maxAge: 60 * 60 * 24 * 7,
