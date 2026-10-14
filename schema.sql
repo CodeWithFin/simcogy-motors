@@ -1,6 +1,6 @@
 -- =========================================================
 -- Car Selling Platform — Schema
--- PostgreSQL (Neon)
+-- PostgreSQL
 -- Single-seller today, seller_id groundwork for future marketplace
 -- =========================================================
 
@@ -312,4 +312,4 @@ CREATE TRIGGER trg_leads_updated_at
 -- Seed: your own seller record (single-seller today)
 -- =========================================================
 INSERT INTO sellers (name, slug, type, verified)
-VALUES ('Your Dealership Name', 'your-dealership-name', 'dealer', TRUE);
+VALUES ('Simcogy Motors', 'simcogy-motors', 'dealer', TRUE);
