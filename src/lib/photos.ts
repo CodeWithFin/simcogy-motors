@@ -3,7 +3,7 @@ function unsplash(id: string) {
 }
 
 export const photos = {
-  suvDesert: unsplash("photo-1533473359331-0135ef1b58bf"),
+  suvDesert: unsplash("photo-A53o1drQS2k"),
   suvMist: unsplash("photo-1519641471654-76ce0107ad1b"),
   coupeSunset: unsplash("photo-1603584173870-7f23fdae1b7a"),
   garage: unsplash("photo-1492144534655-ae79c964c9d7"),
