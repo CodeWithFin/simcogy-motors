@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import sql from "@/lib/db";
+import { tradeInRateLimit } from "@/lib/rate-limit";
+import { sendTradeInNotificationEmail } from "@/lib/email";
 
 const schema = z.object({
   make: z.string().min(1).max(60),
@@ -12,11 +14,14 @@ const schema = z.object({
 });
 
 export async function POST(req: Request) {
+  const rateLimitResult = await tradeInRateLimit(req);
+  if (!rateLimitResult.success) {
+    return rateLimitResult.response!;
+  }
+
   try {
     const data = schema.parse(await req.json());
 
-    // Store phone in condition notes prefix so staff can follow up
-    // (trade_in_requests has no phone column in v1 schema)
     const notes = [
       `Contact: ${data.phone}`,
       data.condition_notes ? data.condition_notes : null,
@@ -36,6 +41,15 @@ export async function POST(req: Request) {
       )
       RETURNING id
     `;
+
+    await sendTradeInNotificationEmail({
+      make: data.make,
+      model: data.model,
+      year: data.year,
+      mileage_km: data.mileage_km,
+      condition_notes: data.condition_notes || "",
+      phone: data.phone,
+    });
 
     return NextResponse.json({ id: rows[0].id }, { status: 201 });
   } catch (err) {

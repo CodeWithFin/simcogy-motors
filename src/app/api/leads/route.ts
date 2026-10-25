@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import sql from "@/lib/db";
+import { leadRateLimit } from "@/lib/rate-limit";
+import { sendLeadNotificationEmail } from "@/lib/email";
+import { getCarById } from "@/lib/cars";
+import { formatKes } from "@/lib/format";
 
 const schema = z.object({
   carId: z.string().uuid(),
@@ -12,14 +16,17 @@ const schema = z.object({
 });
 
 export async function POST(req: Request) {
+  const rateLimitResult = await leadRateLimit(req);
+  if (!rateLimitResult.success) {
+    return rateLimitResult.response!;
+  }
+
   try {
     const body = await req.json();
     const data = schema.parse(body);
 
-    const cars = await sql`
-      SELECT id FROM cars WHERE id = ${data.carId} LIMIT 1
-    `;
-    if (!cars[0]) {
+    const car = await getCarById(data.carId);
+    if (!car) {
       return NextResponse.json({ error: "Car not found" }, { status: 404 });
     }
 
@@ -37,7 +44,22 @@ export async function POST(req: Request) {
       RETURNING id
     `;
 
-    return NextResponse.json({ id: rows[0].id }, { status: 201 });
+    const leadId = rows[0].id;
+
+    await sendLeadNotificationEmail({
+      name: data.name,
+      phone: data.phone,
+      email: data.email || undefined,
+      message: data.message || undefined,
+      channel: data.channel,
+      carMake: car.make,
+      carModel: car.model,
+      carYear: car.year,
+      carSlug: car.slug,
+      carPrice: formatKes(car.price),
+    });
+
+    return NextResponse.json({ id: leadId }, { status: 201 });
   } catch (err) {
     if (err instanceof z.ZodError) {
       return NextResponse.json(
