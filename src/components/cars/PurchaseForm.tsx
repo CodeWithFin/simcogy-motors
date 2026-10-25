@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { buttonClass } from "@/components/ui/Button";
 
 type Mode = "reserve" | "test_drive" | "enquiry";
 
@@ -94,11 +95,9 @@ export function PurchaseForm({
 
   if (status === "ok") {
     return (
-      <div className="bg-card text-card-foreground border border-border rounded-4xl p-6 md:p-8 shadow-sm dark:shadow-none">
-        <h3 className="text-xl font-medium tracking-tight mb-2 text-success">
-          Request received
-        </h3>
-        <p className="text-muted-foreground text-sm font-light">
+      <div id="checkout" className="scroll-mt-24 rounded-card bg-graphite p-8 text-paper">
+        <h3 className="mb-2 text-subheading">Request received</h3>
+        <p className="text-body text-paper/80">
           {copy[mode].success} We’ll contact you on {phone}.
         </p>
       </div>
@@ -108,9 +107,9 @@ export function PurchaseForm({
   return (
     <div
       id="checkout"
-      className="bg-card text-card-foreground border border-border rounded-4xl p-6 md:p-8 space-y-4 shadow-sm dark:shadow-none scroll-mt-8"
+      className="scroll-mt-24 space-y-5 rounded-card border border-concrete bg-paper p-8"
     >
-      <div className="flex flex-wrap gap-2 mb-2">
+      <div className="flex gap-1 rounded-full bg-chalk p-1" role="tablist">
         {(
           [
             ["reserve", "Reserve"],
@@ -121,11 +120,11 @@ export function PurchaseForm({
           <button
             key={key}
             type="button"
+            role="tab"
+            aria-selected={mode === key}
             onClick={() => switchMode(key)}
-            className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
-              mode === key
-                ? "bg-accent text-accent-foreground"
-                : "border border-border text-muted-foreground hover:border-accent"
+            className={`flex-1 rounded-full px-3 py-2 text-xs font-semibold transition-colors ${
+              mode === key ? "bg-paper text-graphite" : "text-steel hover:text-graphite"
             }`}
           >
             {label}
@@ -133,9 +132,9 @@ export function PurchaseForm({
         ))}
       </div>
 
-      <h3 className="text-xl font-medium tracking-tight">{copy[mode].heading}</h3>
+      <h3 className="text-subheading">{copy[mode].heading}</h3>
       {!available && mode === "reserve" && (
-        <p className="text-sm text-destructive font-light">
+        <p className="text-body text-destructive">
           This vehicle is not available to reserve right now.
         </p>
       )}
@@ -152,6 +151,7 @@ export function PurchaseForm({
           required
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
+          type="tel"
           placeholder="Phone / WhatsApp"
           className="field"
         />
@@ -169,24 +169,24 @@ export function PurchaseForm({
           rows={3}
           className="field resize-none"
         />
-        {error && <p className="text-sm text-destructive">{error}</p>}
+        {error && <p className="text-body text-destructive">{error}</p>}
         <button
           type="submit"
           disabled={status === "loading" || (!available && mode === "reserve")}
-          className="w-full py-3 rounded-full bg-accent text-accent-foreground font-medium disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          className={buttonClass("graphite", "md", "w-full")}
         >
           {status === "loading" ? "Sending…" : copy[mode].submit}
         </button>
       </form>
 
-      <div className="pt-4 border-t border-border space-y-2 text-xs text-muted-foreground font-light">
+      <div className="space-y-2 border-t border-concrete pt-5 text-xs text-steel">
         <p>
-          <span className="text-foreground font-medium">7-day viewing comfort:</span>{" "}
+          <span className="font-semibold text-graphite">7-day viewing comfort:</span>{" "}
           If the car&apos;s disclosed condition doesn&apos;t match at pickup, we
           make it right before you commit.
         </p>
         <p>
-          <span className="text-foreground font-medium">Warranty:</span> Limited
+          <span className="font-semibold text-graphite">Warranty:</span> Limited
           dealer cover on major mechanicals — details confirmed at reservation.
         </p>
       </div>

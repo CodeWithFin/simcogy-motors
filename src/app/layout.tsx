@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, Inter_Tight } from "next/font/google";
 import "./globals.css";
+import { CookieConsent } from "@/components/ui/CookieConsent";
+import { Analytics } from "@/components/ui/Analytics";
 
 // Substitutes for Rivian's Adventure (UI text) and Liga (monograms).
 const adventure = Inter({
@@ -33,6 +35,13 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${adventure.variable} ${liga.variable}`}>
         {children}
+        <CookieConsent />
+        <Analytics
+          config={{
+            provider: "ga4",
+            ga4MeasurementId: process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID,
+          }}
+        />
       </body>
     </html>
   );

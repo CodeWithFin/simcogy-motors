@@ -1,8 +1,13 @@
-/** Color-coded inspection ratings — shades tuned for contrast on both themes. */
 const styles = {
-  good: "bg-success/15 text-success border-success/30",
-  fair: "bg-accent/15 text-accent border-accent/30",
-  needs_attention: "bg-destructive/15 text-destructive border-destructive/30",
+  good: "bg-forest/15 text-[#3d6b38]",
+  fair: "bg-solar/20 text-[#7a5200]",
+  needs_attention: "bg-canyon/15 text-[#a8321a]",
+} as const;
+
+const dots = {
+  good: "bg-forest",
+  fair: "bg-solar",
+  needs_attention: "bg-canyon",
 } as const;
 
 const labels = {
@@ -16,11 +21,9 @@ type Rating = keyof typeof styles;
 export function InspectionRating({ rating }: { rating: Rating }) {
   return (
     <span
-      className={`inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full border ${styles[rating]}`}
+      className={`inline-flex items-center gap-2 rounded-chip px-3 py-1 text-xs font-medium ${styles[rating]}`}
     >
-      <span aria-hidden>
-        {rating === "good" ? "●" : rating === "fair" ? "◐" : "○"}
-      </span>
+      <span aria-hidden className={`h-1.5 w-1.5 rounded-full ${dots[rating]}`} />
       {labels[rating]}
     </span>
   );
