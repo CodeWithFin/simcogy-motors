@@ -12,7 +12,7 @@ const slides = [
     title: "Find your next car with confidence",
     body: "We sell our own inspected stock — clear pricing and easy test drives for Kenyan buyers. Not a marketplace.",
     image: photos.suvDesert,
-    alt: "Selective focus photography of assorted color vehicles",
+    alt: "White SUV parked on a desert road",
     primary: { href: "/cars", label: "Shop our stock" },
     secondary: { href: "/#trade-in", label: "Trade in your car" },
   },
